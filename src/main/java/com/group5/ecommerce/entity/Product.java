@@ -26,7 +26,7 @@ public class Product {
     @Column(nullable = false, columnDefinition = "TEXT")
     private String description;
 
-    @Column(name = "discount_rate", scale = 2, nullable = false)
+    @Column(name = "discount_price", scale = 2, nullable = false)
     private double originalPrice;
 
     @Column(name = "discount_rate", nullable = false)
