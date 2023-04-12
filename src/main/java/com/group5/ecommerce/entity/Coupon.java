@@ -26,6 +26,9 @@ public class Coupon {
 
     private UUID code = UUID.randomUUID();
 
+    @Column(name = "was_used")
+    private Boolean wasUsed = true;
+
     @Column(name = "discount_rate", nullable = false)
     private Integer discountRate;
 
