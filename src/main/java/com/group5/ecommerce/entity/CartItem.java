@@ -20,6 +20,14 @@ public class CartItem {
             generator = "cart_item_sequence"
     )
     private Long id;
-
     private Integer count = 1;
+
+    @ManyToOne
+    @JoinColumn(name = "cart_id")
+    private Cart cart;
+
+    @ManyToOne
+    @JoinColumn(name = "product_id")
+    private Product product;
+
 }

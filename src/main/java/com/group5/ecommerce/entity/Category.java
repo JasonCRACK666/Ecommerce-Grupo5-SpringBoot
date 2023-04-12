@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @Entity
 @Table(name = "category")
 @AllArgsConstructor
@@ -23,4 +25,11 @@ public class Category {
 
     @Column(nullable = false, unique = true)
     private String name;
+
+    @OneToMany(mappedBy = "category")
+    private List<Product> products;
+
+    @ManyToMany(mappedBy = "categories")
+    private List<Brand> brands;
+
 }

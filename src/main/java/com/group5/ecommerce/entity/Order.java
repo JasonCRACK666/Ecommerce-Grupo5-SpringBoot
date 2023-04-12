@@ -63,4 +63,16 @@ public class Order {
 
     @Column(name = "date_issued")
     private Date dateIssued = new Date(System.currentTimeMillis());
+
+    @ManyToOne
+    @JoinColumn(name = "user_id", nullable = false)
+    private User user;
+
+    @OneToOne(mappedBy = "order")
+    private Coupon coupon;
+
+    @ManyToOne
+    @JoinColumn(name = "shipping_id", nullable = false)
+    private Shipping shipping;
+
 }

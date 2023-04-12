@@ -31,4 +31,9 @@ public class Coupon {
 
     @Column(name = "cost_points", nullable = false)
     private Integer costPoints;
+
+    @OneToOne
+    @JoinColumn(name = "order_id")
+    private Order order;
+
 }

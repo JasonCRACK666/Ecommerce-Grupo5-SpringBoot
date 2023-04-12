@@ -23,4 +23,13 @@ public class Image {
 
     @Column(nullable = false)
     private String imageUrl;
+
+    @ManyToOne
+    @JoinColumn(name = "color_id")
+    private Color color;
+
+    @ManyToOne
+    @JoinColumn(name = "product_id")
+    private Product product;
+
 }

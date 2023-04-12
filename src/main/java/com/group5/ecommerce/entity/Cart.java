@@ -5,6 +5,8 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @Entity
 @Table(name = "cart")
 @AllArgsConstructor
@@ -22,4 +24,11 @@ public class Cart {
     )
     private Long id;
     private Integer cartItems = 0;
+
+    @OneToOne(mappedBy = "cart")
+    private User user;
+
+    @OneToMany(mappedBy = "cart")
+    private List<CartItem> cartItemList;
+
 }

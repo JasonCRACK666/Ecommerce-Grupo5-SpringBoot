@@ -1,7 +1,9 @@
 package com.group5.ecommerce.entity;
 
 import com.group5.ecommerce.entity.enums.Theme;
+
 import jakarta.persistence.*;
+
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 
@@ -24,7 +26,6 @@ public class Account {
 
     private String avatar;
     private String banner;
-
     private Integer points = 0;
 
     @Enumerated(EnumType.STRING)
@@ -32,4 +33,7 @@ public class Account {
 
     @Column(columnDefinition = "TEXT")
     private String about;
+
+    @OneToOne(mappedBy = "account")
+    private User user;
 }

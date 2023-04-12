@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 
 import java.sql.Date;
+import java.util.List;
 
 @Entity
 @Table(name = "product")
@@ -40,4 +41,41 @@ public class Product {
 
     @Column(name = "publication_date")
     private Date publicationDate = new Date(System.currentTimeMillis());
+
+    @OneToMany(mappedBy = "product")
+    private List<Review> reviews;
+
+    @ManyToOne
+    @JoinColumn(name = "category_id", nullable = false)
+    private Category category;
+
+    @OneToMany(mappedBy = "product")
+    private List<CartItem> cartItems;
+
+    @ManyToOne
+    @JoinColumn(name = "brand_id", nullable = false)
+    private Brand brand;
+
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(
+            name = "wishlist_product",
+            joinColumns = @JoinColumn(name = "wish_list_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "product_id", referencedColumnName = "id")
+    )
+    private List<WishList> wishLists;
+
+    @OneToMany(mappedBy = "product")
+    private List<Image> images;
+
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(
+            name = "product_color",
+            joinColumns = @JoinColumn(name = "color_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "product_id", referencedColumnName = "id")
+    )
+    private List<Color> colors;
+
+    @OneToMany(mappedBy = "product")
+    private List<OrderItem> orderItems;
+
 }

@@ -5,6 +5,8 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @Entity
 @Table(name = "shipping")
 @AllArgsConstructor
@@ -30,4 +32,7 @@ public class Shipping {
 
     @Column(name = "time_in_days", nullable = false)
     private Integer timeInDays;
+
+    @OneToMany(mappedBy = "shipping")
+    private List<Order> orders;
 }

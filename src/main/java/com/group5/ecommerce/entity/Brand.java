@@ -5,6 +5,8 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @Entity
 @Table(name = "brand")
 @AllArgsConstructor
@@ -30,4 +32,19 @@ public class Brand {
 
     @Column(nullable = false)
     private String banner;
+
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(
+            name = "category_brand",
+            joinColumns = @JoinColumn(name = "category_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "brand_id", referencedColumnName = "id")
+    )
+    private List<Category> categories;
+
+    @ManyToMany(mappedBy = "brands_following")
+    private List<User> followers;
+
+    @OneToMany(mappedBy = "brand")
+    private List<Product> products;
+
 }

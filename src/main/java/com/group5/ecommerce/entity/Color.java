@@ -1,9 +1,10 @@
 package com.group5.ecommerce.entity;
-
 import jakarta.persistence.*;
 
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
+
+import java.util.List;
 
 @Entity
 @Table(name = "color")
@@ -27,4 +28,11 @@ public class Color {
 
     @Column(nullable = false, length = 7)
     private String hex;
+
+    @OneToMany(mappedBy = "color")
+    private List<Image> images;
+
+    @ManyToMany(mappedBy = "colors")
+    private List<Product> products;
+
 }
