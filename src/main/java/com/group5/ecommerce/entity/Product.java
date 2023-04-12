@@ -38,7 +38,13 @@ public class Product {
     private Integer discountRate;
 
     @Column(nullable = false)
+    private Integer pointValue;
+
+    @Column(nullable = false)
     private Integer quantity;
+
+    @Column(name = "in_offer")
+    private Boolean inOffer = false;
 
     @Column(nullable = false)
     private Integer sold;
