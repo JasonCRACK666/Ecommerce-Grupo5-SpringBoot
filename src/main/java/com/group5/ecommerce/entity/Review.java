@@ -4,6 +4,9 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 
+import java.sql.Timestamp;
+import java.time.Instant;
+
 @Entity
 @Table(name = "review")
 @AllArgsConstructor
@@ -21,8 +24,11 @@ public class Review {
     )
     private Long id;
 
+    @Column(name = "created_at")
+    private Timestamp createdAt = Timestamp.from(Instant.now());
+
     @Column(nullable = false)
-    private Integer score;
+    private Integer score = 0;
 
     @Column(columnDefinition = "TEXT")
     private String comment;
