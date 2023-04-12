@@ -41,7 +41,7 @@ public class Brand {
     )
     private List<Category> categories;
 
-    @ManyToMany(mappedBy = "brands_following")
+    @ManyToMany(mappedBy = "brandsFollowing")
     private List<User> followers;
 
     @OneToMany(mappedBy = "brand")

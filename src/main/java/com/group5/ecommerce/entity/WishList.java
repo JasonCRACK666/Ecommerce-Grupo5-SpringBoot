@@ -24,9 +24,9 @@ public class WishList {
     )
     private Long id;
 
-    @OneToOne(mappedBy = "wish_list")
+    @OneToOne(mappedBy = "wishList")
     private User user;
 
-    @ManyToMany(mappedBy = "wish_lists")
+    @ManyToMany(mappedBy = "wishLists")
     private List<Product> products;
 }
