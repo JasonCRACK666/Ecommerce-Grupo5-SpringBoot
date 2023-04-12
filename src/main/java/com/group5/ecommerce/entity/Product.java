@@ -24,6 +24,9 @@ public class Product {
     )
     private Long id;
 
+    @Column(nullable = false)
+    private String title;
+
     @Column(nullable = false, columnDefinition = "TEXT")
     private String description;
 
