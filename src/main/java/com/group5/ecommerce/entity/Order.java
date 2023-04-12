@@ -39,7 +39,7 @@ public class Order {
     private BigDecimal amount;
 
     @Column(name = "full_name", nullable = false)
-    private String fullname;
+    private String fullName;
 
     @Column(name = "phone_number", nullable = false)
     private Integer phoneNumber;
