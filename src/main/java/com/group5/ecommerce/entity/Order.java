@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
 import java.sql.Date;
+import java.util.List;
 import java.util.UUID;
 
 @Entity
@@ -74,5 +75,8 @@ public class Order {
     @ManyToOne
     @JoinColumn(name = "shipping_id", nullable = false)
     private Shipping shipping;
+
+    @OneToMany(mappedBy = "order")
+    private List<OrderItem> orderItems;
 
 }
