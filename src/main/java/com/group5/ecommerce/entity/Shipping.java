@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 @Entity
@@ -28,7 +29,7 @@ public class Shipping {
     private String name;
 
     @Column(nullable = false, scale = 2)
-    private double price;
+    private BigDecimal price;
 
     @Column(name = "time_in_days", nullable = false)
     private Integer timeInDays;

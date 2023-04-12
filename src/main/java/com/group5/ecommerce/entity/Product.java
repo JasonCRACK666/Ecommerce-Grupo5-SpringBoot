@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 
+import java.math.BigDecimal;
 import java.sql.Date;
 import java.util.List;
 
@@ -31,7 +32,7 @@ public class Product {
     private String description;
 
     @Column(name = "discount_price", scale = 2, nullable = false)
-    private double originalPrice;
+    private BigDecimal originalPrice;
 
     @Column(name = "discount_rate", nullable = false)
     private Integer discountRate;
