@@ -57,20 +57,20 @@ public class User implements UserDetails {
     private boolean isActive = false;
 
     @Column(name = "activate_code")
-    private UUID activateCode = UUID.randomUUID();
+    private UUID activateCode;
 
     @Enumerated(EnumType.STRING)
     private Role role = Role.USER;
 
-    @OneToOne
+    @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "account_id", nullable = false)
     private Account account;
 
-    @OneToOne
+    @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "cart_id", nullable = false)
     private Cart cart;
 
-    @OneToOne
+    @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "wish_list_id", nullable = false)
     private WishList wishList;
 
