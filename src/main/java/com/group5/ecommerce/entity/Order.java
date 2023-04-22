@@ -74,7 +74,7 @@ public class Order {
     private User user;
 
     @OneToOne(mappedBy = "order")
-    private Coupon coupon;
+    private CouponGenerated coupon;
 
     @ManyToOne
     @JoinColumn(name = "shipping_id", nullable = false)
