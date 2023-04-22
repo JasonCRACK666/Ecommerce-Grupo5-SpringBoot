@@ -38,4 +38,8 @@ public class CouponGenerated {
     @ManyToOne
     @JoinColumn(name = "coupon_base_id", nullable = false)
     private CouponBase couponBase;
+
+    @ManyToOne
+    @JoinColumn(name = "user_id", nullable = false)
+    private User user;
 }
