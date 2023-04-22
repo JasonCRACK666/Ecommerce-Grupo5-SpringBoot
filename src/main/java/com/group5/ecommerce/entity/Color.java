@@ -33,9 +33,6 @@ public class Color {
     @Column(nullable = false, length = 7)
     private String hex;
 
-    @OneToMany(mappedBy = "color")
-    private List<Image> images;
-
     @ManyToMany(mappedBy = "colors")
     private List<Product> products;
 
