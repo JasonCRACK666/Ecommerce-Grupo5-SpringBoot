@@ -1,7 +1,9 @@
 package com.group5.ecommerce.controller;
 
 import com.group5.ecommerce.dto.auth.LoginDto;
+import com.group5.ecommerce.dto.auth.RegisterUserDto;
 import com.group5.ecommerce.response.auth.LoginResponse;
+import com.group5.ecommerce.response.auth.RegisterUserResponse;
 import com.group5.ecommerce.service.auth.AuthServiceImp;
 
 import jakarta.validation.Valid;
@@ -21,6 +23,13 @@ public class AuthController {
             @Valid @RequestBody LoginDto loginData
     ) {
         return new ResponseEntity<>(this.authService.login(loginData), HttpStatus.OK);
+    }
+
+    @PostMapping(path = "register")
+    public ResponseEntity<RegisterUserResponse> register(
+            @Valid @RequestBody RegisterUserDto userData
+    ) {
+        return new ResponseEntity<>(this.authService.registerUser(userData), HttpStatus.OK);
     }
 
 }
