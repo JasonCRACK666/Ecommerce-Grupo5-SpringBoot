@@ -5,6 +5,8 @@ import com.group5.ecommerce.entity.enums.OrderStatus;
 import jakarta.persistence.*;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
@@ -16,6 +18,8 @@ import java.util.UUID;
 @Table(name = "orders")
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
+@Data
 public class Order {
     @Id
     @SequenceGenerator(

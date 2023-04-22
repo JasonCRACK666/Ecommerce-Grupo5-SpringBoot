@@ -3,6 +3,7 @@ package com.group5.ecommerce.entity;
 import jakarta.persistence.*;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.NoArgsConstructor;
 
 import java.util.List;
@@ -11,6 +12,7 @@ import java.util.List;
 @Table(name = "cart")
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 public class Cart {
     @Id
     @SequenceGenerator(

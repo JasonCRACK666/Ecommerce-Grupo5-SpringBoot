@@ -3,6 +3,8 @@ package com.group5.ecommerce.entity;
 import jakarta.persistence.*;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.List;
@@ -11,6 +13,8 @@ import java.util.List;
 @Table(name = "wish_list")
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
+@Data
 public class WishList {
     @Id
     @SequenceGenerator(

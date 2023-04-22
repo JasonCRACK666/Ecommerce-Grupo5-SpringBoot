@@ -2,12 +2,16 @@ package com.group5.ecommerce.entity;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
 @Table(name = "cart_item")
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
+@Data
 public class CartItem {
     @Id
     @SequenceGenerator(

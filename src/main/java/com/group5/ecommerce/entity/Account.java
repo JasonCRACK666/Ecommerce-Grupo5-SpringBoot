@@ -5,12 +5,16 @@ import com.group5.ecommerce.entity.enums.Theme;
 import jakarta.persistence.*;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
 @Table(name = "account")
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
+@Data
 public class Account {
     @Id
     @SequenceGenerator(

@@ -3,6 +3,8 @@ package com.group5.ecommerce.entity;
 import jakarta.persistence.*;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
@@ -12,6 +14,8 @@ import java.util.List;
 @Table(name = "shipping")
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
+@Data
 public class Shipping {
     @Id
     @SequenceGenerator(
