@@ -9,8 +9,10 @@ import com.group5.ecommerce.repository.AccountRepository;
 import com.group5.ecommerce.repository.CartRepository;
 import com.group5.ecommerce.repository.UserRepository;
 import com.group5.ecommerce.repository.WishListRepository;
+
 import lombok.RequiredArgsConstructor;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -41,6 +43,15 @@ public class SecurityConfig {
     private final CartRepository cartRepository;
     private final WishListRepository wishListRepository;
 
+    @Value("${admin.username}")
+    private final String adminUsername;
+
+    @Value("${admin.email}")
+    private final String adminEmail;
+
+    @Value("${admin.password}")
+    private final String adminPassword;
+
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         var account = new Account();
@@ -53,12 +64,12 @@ public class SecurityConfig {
         this.wishListRepository.save(wishList);
 
         var user = User.builder()
-                .userName("AdminEcommerce")
+                .userName(this.adminUsername)
                 .role(Role.ADMIN)
-                .email("adminecommerce@gmail.com")
+                .email(this.adminEmail)
                 .firstName("Admin")
                 .lastName("Ecommerce")
-                .password(this.passwordEncoder.encode("adminecommerce:1234"))
+                .password(this.passwordEncoder.encode(this.adminPassword))
                 .isActive(true)
                 .activateCode(UUID.randomUUID())
                 .DNI(12345678)
