@@ -53,8 +53,7 @@ public class User implements UserDetails {
     @Column(nullable = false)
     private String password;
 
-    @Column(name = "is_active", columnDefinition = "BOOLEAN default false")
-    private Boolean isActive;
+    private Boolean isActive = false;
 
     @Column(name = "activate_code")
     private UUID activateCode;

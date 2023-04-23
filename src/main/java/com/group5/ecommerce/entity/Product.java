@@ -29,16 +29,16 @@ public class Product {
     )
     private Long id;
 
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     private String title;
 
     @Column(nullable = false, columnDefinition = "TEXT")
     private String description;
 
-    @Column(name = "discount_price", scale = 2, nullable = false)
+    @Column(name = "original_price", scale = 2, nullable = false)
     private BigDecimal originalPrice;
 
-    @Column(name = "discount_rate", nullable = false)
+    @Column(name = "discount_rate")
     private Integer discountRate;
 
     @Column(nullable = false)
@@ -51,7 +51,7 @@ public class Product {
     private Boolean inOffer = false;
 
     @Column(nullable = false)
-    private Integer sold;
+    private Integer sold = 0;
 
     @Column(name = "publication_date")
     private Date publicationDate = new Date(System.currentTimeMillis());

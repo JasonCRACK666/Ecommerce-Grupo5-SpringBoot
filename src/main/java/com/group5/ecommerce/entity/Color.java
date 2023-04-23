@@ -1,4 +1,5 @@
 package com.group5.ecommerce.entity;
+
 import jakarta.persistence.*;
 
 import lombok.AllArgsConstructor;
@@ -27,7 +28,7 @@ public class Color {
     )
     private Long id;
 
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     private String name;
 
     @Column(nullable = false, length = 7)

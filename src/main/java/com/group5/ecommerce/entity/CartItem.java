@@ -24,6 +24,7 @@ public class CartItem {
             generator = "cart_item_sequence"
     )
     private Long id;
+
     private Integer count = 1;
 
     @ManyToOne

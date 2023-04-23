@@ -30,7 +30,7 @@ public class CouponBase {
     @Column(nullable = false, unique = true)
     private String name;
 
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     private Integer discountRate;
 
     @Column(name = "cost_points", nullable = false)

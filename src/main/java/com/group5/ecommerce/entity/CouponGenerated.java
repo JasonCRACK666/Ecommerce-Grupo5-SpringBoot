@@ -31,7 +31,7 @@ public class CouponGenerated {
     @Column(nullable = false)
     private UUID code;
 
-    @OneToOne()
+    @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "order_id")
     private Order order;
 

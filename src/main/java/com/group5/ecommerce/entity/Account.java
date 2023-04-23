@@ -30,6 +30,8 @@ public class Account {
 
     private String avatar;
     private String banner;
+
+    @Column(columnDefinition = "INT default 0")
     private Integer points = 0;
 
     @Enumerated(EnumType.STRING)

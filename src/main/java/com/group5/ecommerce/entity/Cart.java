@@ -25,6 +25,8 @@ public class Cart {
             generator = "cart_sequence"
     )
     private Long id;
+
+    @Column(columnDefinition = "INT default 0")
     private Integer cartItems = 0;
 
     @OneToOne(mappedBy = "cart")

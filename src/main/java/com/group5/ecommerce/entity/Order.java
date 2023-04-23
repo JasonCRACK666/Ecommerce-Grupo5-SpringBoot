@@ -34,7 +34,7 @@ public class Order {
     private Long id;
 
     @Enumerated(EnumType.STRING)
-    private OrderStatus status;
+    private OrderStatus status = OrderStatus.STARTING;
 
     @Column(name = "transaction_id", nullable = false)
     private UUID transactionId;
