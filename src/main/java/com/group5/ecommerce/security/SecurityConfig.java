@@ -83,8 +83,6 @@ public class SecurityConfig {
         http
                 .csrf()
                 .disable()
-                .cors()
-                .disable()
                 .authorizeHttpRequests((authz) -> authz
                         .requestMatchers(
                                 HttpMethod.GET,
