@@ -53,8 +53,8 @@ public class User implements UserDetails {
     @Column(nullable = false)
     private String password;
 
-    @Column(name = "is_active")
-    private boolean isActive = false;
+    @Column(name = "is_active", columnDefinition = "BOOLEAN default false")
+    private Boolean isActive;
 
     @Column(name = "activate_code")
     private UUID activateCode;
@@ -90,6 +90,10 @@ public class User implements UserDetails {
 
     @OneToMany(mappedBy = "user")
     private List<CouponGenerated> coupons;
+
+    public String getUserName() {
+        return this.userName;
+    }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

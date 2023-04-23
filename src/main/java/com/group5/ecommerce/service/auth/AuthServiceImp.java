@@ -9,11 +9,13 @@ import com.group5.ecommerce.entity.User;
 import com.group5.ecommerce.entity.WishList;
 import com.group5.ecommerce.entity.enums.Role;
 
+import com.group5.ecommerce.exception.notFound.NotFoundReqException;
 import com.group5.ecommerce.repository.AccountRepository;
 import com.group5.ecommerce.repository.CartRepository;
 import com.group5.ecommerce.repository.UserRepository;
 import com.group5.ecommerce.repository.WishListRepository;
 
+import com.group5.ecommerce.response.MessageResponse;
 import com.group5.ecommerce.response.auth.LoginResponse;
 import com.group5.ecommerce.response.auth.RegisterUserResponse;
 
@@ -26,6 +28,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -84,7 +87,20 @@ public class AuthServiceImp implements AuthService {
 
         var savedUser = this.userRepository.save(user);
 
-        return new RegisterUserResponse("Se ha enviado a " + savedUser.getUsername() + " un link de activación");
+        return new RegisterUserResponse("Se ha enviado a " + savedUser.getActivateCode() + " un link de activación");
+    }
+
+    @Override
+    public MessageResponse activateUser(UUID activateCode) {
+        Optional<User> user = this.userRepository.findByActivateCode(activateCode);
+
+        if (user.isEmpty()) throw new NotFoundReqException("El usuario no existe");
+
+        user.get().setIsActive(true);
+
+        this.userRepository.save(user.get());
+
+        return new MessageResponse("Cuenta activada");
     }
 
 }
