@@ -5,6 +5,6 @@ import lombok.RequiredArgsConstructor;
 
 @Data
 @RequiredArgsConstructor
-public class PongResponse {
+public class MessageResponse {
     private final String message;
 }
