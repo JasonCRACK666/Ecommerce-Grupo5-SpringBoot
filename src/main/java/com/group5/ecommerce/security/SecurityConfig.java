@@ -44,13 +44,13 @@ public class SecurityConfig {
     private final WishListRepository wishListRepository;
 
     @Value("${admin.username}")
-    private final String adminUsername;
+    private String adminUsername;
 
     @Value("${admin.email}")
-    private final String adminEmail;
+    private String adminEmail;
 
     @Value("${admin.password}")
-    private final String adminPassword;
+    private String adminPassword;
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
