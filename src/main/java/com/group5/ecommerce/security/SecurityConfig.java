@@ -91,7 +91,7 @@ public class SecurityConfig {
                             .hasAuthority(Role.ADMIN.name())
                         .requestMatchers(
                                 HttpMethod.POST,
-                                ""
+                                "/api/brands"
                         )
                             .hasAuthority(Role.ADMIN.name())
                         .requestMatchers(
