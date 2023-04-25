@@ -1,14 +1,8 @@
 package com.group5.ecommerce.security;
 
-import com.group5.ecommerce.entity.Account;
-import com.group5.ecommerce.entity.Cart;
-import com.group5.ecommerce.entity.User;
-import com.group5.ecommerce.entity.WishList;
+import com.group5.ecommerce.entity.*;
 import com.group5.ecommerce.entity.enums.Role;
-import com.group5.ecommerce.repository.AccountRepository;
-import com.group5.ecommerce.repository.CartRepository;
-import com.group5.ecommerce.repository.UserRepository;
-import com.group5.ecommerce.repository.WishListRepository;
+import com.group5.ecommerce.repository.*;
 
 import lombok.RequiredArgsConstructor;
 
@@ -91,7 +85,8 @@ public class SecurityConfig {
                             .hasAuthority(Role.ADMIN.name())
                         .requestMatchers(
                                 HttpMethod.POST,
-                                "/api/brands"
+                                "/api/brands",
+                                "/api/products"
                         )
                             .hasAuthority(Role.ADMIN.name())
                         .requestMatchers(
