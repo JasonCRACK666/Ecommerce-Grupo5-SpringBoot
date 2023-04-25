@@ -1,13 +1,15 @@
 package com.group5.ecommerce.entity;
 
 import jakarta.persistence.*;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.CreationTimestamp;
 
 import java.math.BigDecimal;
-import java.sql.Date;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
@@ -47,14 +49,11 @@ public class Product {
     @Column(nullable = false)
     private Integer quantity;
 
-    @Column(name = "in_offer")
-    private Boolean inOffer = false;
+    @Column(nullable = false, columnDefinition = "INT default 0")
+    private int sold;
 
-    @Column(nullable = false)
-    private Integer sold = 0;
-
-    @Column(name = "publication_date")
-    private Date publicationDate = new Date(System.currentTimeMillis());
+    @CreationTimestamp
+    private LocalDateTime publicationDate;
 
     @OneToMany(mappedBy = "product")
     private List<Review> reviews;
