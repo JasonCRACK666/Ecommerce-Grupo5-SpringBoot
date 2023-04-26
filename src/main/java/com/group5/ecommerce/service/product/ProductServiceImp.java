@@ -5,11 +5,16 @@ import com.group5.ecommerce.entity.*;
 import com.group5.ecommerce.exception.notFound.NotFoundReqException;
 import com.group5.ecommerce.repository.*;
 import com.group5.ecommerce.response.product.DetailProductResponse;
+import com.group5.ecommerce.response.product.PaginatedProductsResponse;
 import com.group5.ecommerce.response.product.ProductMapper;
+import com.group5.ecommerce.response.product.ProductResponse;
 import com.group5.ecommerce.utils.CloudinaryUtils;
 
 import lombok.RequiredArgsConstructor;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -29,6 +34,35 @@ public class ProductServiceImp implements ProductService {
     private final ColorRepository colorRepository;
     private final CategoryRepository categoryRepository;
     private final BrandRepository brandRepository;
+
+    @Override
+    public PaginatedProductsResponse getAllProducts(int page, int size) {
+        Pageable pageable = PageRequest.of(page, size);
+
+        Page<Product> paginatedProducts = this.productRepository.findAll(pageable);
+
+        List<Product> products = paginatedProducts.getContent();
+
+        List<ProductResponse> mappedProducts = ProductMapper.INSTANCE.toListResponse(products);
+
+        return new PaginatedProductsResponse(
+                mappedProducts,
+                paginatedProducts.getNumber(),
+                paginatedProducts.getSize(),
+                paginatedProducts.getTotalElements(),
+                paginatedProducts.getTotalPages(),
+                paginatedProducts.isLast()
+        );
+    }
+
+    @Override
+    public DetailProductResponse detailProduct(Long productId) {
+        Optional<Product> product = this.productRepository.findById(productId);
+
+        if (product.isEmpty()) throw new NotFoundReqException("El producto de ID " + productId + " no existe");
+
+        return ProductMapper.INSTANCE.toResponse(product.get());
+    }
 
     @Override
     public DetailProductResponse saveProduct(CreateProductDto productData) {
@@ -87,12 +121,4 @@ public class ProductServiceImp implements ProductService {
         return ProductMapper.INSTANCE.toResponse(savedProduct);
     }
 
-    @Override
-    public DetailProductResponse detailProduct(Long productId) {
-        Optional<Product> product = this.productRepository.findById(productId);
-
-        if (product.isEmpty()) throw new NotFoundReqException("El producto de ID " + productId + " no existe");
-
-        return ProductMapper.INSTANCE.toResponse(product.get());
-    }
 }
