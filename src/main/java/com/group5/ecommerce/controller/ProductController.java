@@ -1,7 +1,6 @@
 package com.group5.ecommerce.controller;
 
 import com.group5.ecommerce.dto.product.CreateProductDto;
-import com.group5.ecommerce.entity.Product;
 import com.group5.ecommerce.response.product.DetailProductResponse;
 import com.group5.ecommerce.service.product.ProductServiceImp;
 
@@ -19,7 +18,7 @@ public class ProductController {
     private ProductServiceImp productService;
 
     @PostMapping
-    public ResponseEntity<Product> createProduct(
+    public ResponseEntity<DetailProductResponse> createProduct(
             @Valid CreateProductDto productData
     ) {
         return new ResponseEntity<>(this.productService.saveProduct(productData), HttpStatus.OK);

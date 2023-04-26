@@ -31,7 +31,7 @@ public class ProductServiceImp implements ProductService {
     private final BrandRepository brandRepository;
 
     @Override
-    public Product saveProduct(CreateProductDto productData) {
+    public DetailProductResponse saveProduct(CreateProductDto productData) {
         List<Image> images = new ArrayList<>();
         List<Color> colors = new ArrayList<>();
 
@@ -43,6 +43,8 @@ public class ProductServiceImp implements ProductService {
                         .imageUrl(imageUrl)
                         .build();
                 this.imageRepository.save(image);
+
+                images.add(image);
             }
         } catch (IOException exception) {
             throw new RuntimeException("La imagen no se ha podido subir");
@@ -80,7 +82,9 @@ public class ProductServiceImp implements ProductService {
                 .images(images)
                 .build();
 
-        return this.productRepository.save(product);
+        var savedProduct = this.productRepository.save(product);
+
+        return ProductMapper.INSTANCE.toResponse(savedProduct);
     }
 
     @Override
