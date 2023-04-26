@@ -27,7 +27,6 @@ public class CreateProductDto {
     @Positive(message = "El precio debe ser mayor a 0")
     private BigDecimal originalPrice;
 
-    @Null
     @Max(value = 50)
     @Positive(message = "El porcentaje de descuento debe ser mayor a 0")
     private Integer discountRate;

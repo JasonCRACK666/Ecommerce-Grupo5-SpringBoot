@@ -4,6 +4,8 @@ import com.group5.ecommerce.dto.product.CreateProductDto;
 import com.group5.ecommerce.entity.*;
 import com.group5.ecommerce.exception.notFound.NotFoundReqException;
 import com.group5.ecommerce.repository.*;
+import com.group5.ecommerce.response.product.DetailProductResponse;
+import com.group5.ecommerce.response.product.ProductMapper;
 import com.group5.ecommerce.utils.CloudinaryUtils;
 
 import lombok.RequiredArgsConstructor;
@@ -79,5 +81,14 @@ public class ProductServiceImp implements ProductService {
                 .build();
 
         return this.productRepository.save(product);
+    }
+
+    @Override
+    public DetailProductResponse detailProduct(Long productId) {
+        Optional<Product> product = this.productRepository.findById(productId);
+
+        if (product.isEmpty()) throw new NotFoundReqException("El producto de ID " + productId + " no existe");
+
+        return ProductMapper.INSTANCE.toResponse(product.get());
     }
 }
