@@ -134,8 +134,53 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public DetailProductResponse saveProduct(CreateProductDto productData) {
-        List<Image> images = new ArrayList<>();
+        var product = new Product();
+
+        product.setTitle(productData.getTitle());
+        product.setDescription(productData.getDescription());
+        product.setOriginalPrice(productData.getOriginalPrice());
+        product.setDiscountRate(productData.getDiscountRate());
+        product.setPointValue(productData.getPointValue());
+        product.setQuantity(productData.getQuantity());
+
         List<Color> colors = new ArrayList<>();
+
+        for (Long colorId : productData.getColors()) {
+            var color = this.colorRepository
+                    .findById(colorId)
+                    .orElseThrow(
+                            () -> new NotFoundReqException(
+                                    "El color de ID " + colorId + " no existe"
+                            )
+                    );
+            colors.add(color);
+        }
+
+        product.setColors(colors);
+
+        Category category = this.categoryRepository
+                .findById(productData.getCategory())
+                .orElseThrow(
+                        () -> new NotFoundReqException(
+                                "La categoría de ID" + productData.getCategory() + " no existe"
+                        )
+                );
+
+        product.setCategory(category);
+
+        Brand brand = this.brandRepository
+                .findById(productData.getBrand())
+                .orElseThrow(
+                        () -> new NotFoundReqException(
+                                "La marca de ID " + productData.getBrand() + " no existe"
+                        )
+                );
+
+        product.setBrand(brand);
+
+        var savedProduct = this.productRepository.save(product);
+
+        List<Image> images = new ArrayList<>();
 
         try {
             for (MultipartFile fileImage : productData.getImages()) {
@@ -143,6 +188,7 @@ public class ProductServiceImpl implements ProductService {
 
                 var image = Image.builder()
                         .imageUrl(imageUrl)
+                        .product(savedProduct)
                         .build();
                 this.imageRepository.save(image);
 
@@ -152,39 +198,7 @@ public class ProductServiceImpl implements ProductService {
             throw new RuntimeException("La imagen no se ha podido subir");
         }
 
-        for (Long colorId : productData.getColors()) {
-            var color = this.colorRepository.findById(colorId);
-
-            if (color.isEmpty())
-                throw new NotFoundReqException("El color de ID" + colorId + " no existe");
-
-            colors.add(color.get());
-        }
-
-        Optional<Category> category = this.categoryRepository.findById(productData.getCategory());
-
-        if (category.isEmpty())
-            throw new NotFoundReqException("La categoría de ID" + productData.getCategory() + " no existe");
-
-        Optional<Brand> brand = this.brandRepository.findById(productData.getBrand());
-
-        if (brand.isEmpty())
-            throw new NotFoundReqException("La marca de ID" + productData.getBrand() + " no existe");
-
-        var product = Product.builder()
-                .title(productData.getTitle())
-                .description(productData.getDescription())
-                .originalPrice(productData.getOriginalPrice())
-                .discountRate(productData.getDiscountRate())
-                .pointValue(productData.getPointValue())
-                .quantity(productData.getQuantity())
-                .category(category.get())
-                .brand(brand.get())
-                .colors(colors)
-                .images(images)
-                .build();
-
-        var savedProduct = this.productRepository.save(product);
+        savedProduct.setImages(images);
 
         return ProductMapper.INSTANCE.toResponse(savedProduct);
     }
