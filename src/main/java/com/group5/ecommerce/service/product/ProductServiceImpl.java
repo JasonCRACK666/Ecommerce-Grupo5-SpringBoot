@@ -2,8 +2,11 @@ package com.group5.ecommerce.service.product;
 
 import com.group5.ecommerce.dto.product.CreateProductDto;
 import com.group5.ecommerce.entity.*;
+import com.group5.ecommerce.entity.enums.SearchOrder;
+import com.group5.ecommerce.entity.enums.SortBy;
 import com.group5.ecommerce.exception.notFound.NotFoundReqException;
 import com.group5.ecommerce.repository.*;
+import com.group5.ecommerce.repository.product.ProductRepository;
 import com.group5.ecommerce.response.product.DetailProductResponse;
 import com.group5.ecommerce.response.product.PaginatedProductsResponse;
 import com.group5.ecommerce.response.product.ProductMapper;
@@ -19,13 +22,14 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
-public class ProductServiceImp implements ProductService {
+public class ProductServiceImpl implements ProductService {
 
     private final CloudinaryUtils cloudinaryUtils;
 
@@ -44,6 +48,70 @@ public class ProductServiceImp implements ProductService {
         List<Product> products = paginatedProducts.getContent();
 
         List<ProductResponse> mappedProducts = ProductMapper.INSTANCE.toListResponse(products);
+
+        return new PaginatedProductsResponse(
+                mappedProducts,
+                paginatedProducts.getNumber(),
+                paginatedProducts.getSize(),
+                paginatedProducts.getTotalElements(),
+                paginatedProducts.getTotalPages(),
+                paginatedProducts.isLast()
+        );
+    }
+
+    @Override
+    public PaginatedProductsResponse searchProducts(
+            String query,
+            SortBy sortBy,
+            SearchOrder order,
+            String categoryName,
+            String brandName,
+            List<String> colorNames,
+            BigDecimal limitPrice,
+            boolean inOffer,
+            int page,
+            int size
+    ) {
+        Category category = null;
+        if (categoryName != null)
+            category = this.categoryRepository
+                    .findByName(categoryName)
+                    .orElseThrow(
+                            () -> new NotFoundReqException("La categoría de nombre " + categoryName + " no existe")
+                    );
+
+        Brand brand = null;
+        if (brandName != null)
+            brand = this.brandRepository
+                    .findByName(brandName)
+                    .orElseThrow(
+                            () -> new NotFoundReqException("La marca de nombre " + brandName + " no existe")
+                    );
+
+        if (colorNames != null)
+            for (String colorName : colorNames) {
+                this.colorRepository
+                        .findByName(colorName)
+                        .orElseThrow(
+                                () -> new NotFoundReqException("El color de nombre " + colorName + " no existe")
+                        );
+            }
+
+        Pageable pageable = PageRequest.of(page, size);
+
+        Page<Product> paginatedProducts = this.productRepository.searchBy(
+                query,
+                sortBy,
+                order,
+                category,
+                brand,
+                colorNames,
+                limitPrice,
+                inOffer,
+                pageable
+        );
+
+        List<ProductResponse> mappedProducts = ProductMapper.INSTANCE.toListResponse(paginatedProducts.getContent());
 
         return new PaginatedProductsResponse(
                 mappedProducts,
