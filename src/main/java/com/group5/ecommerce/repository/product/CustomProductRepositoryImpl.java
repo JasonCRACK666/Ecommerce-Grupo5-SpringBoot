@@ -60,8 +60,9 @@ public class CustomProductRepositoryImpl implements CustomProductRepository {
         if (brand != null)
             predicates.add(cb.equal(productRoot.get("brand"), brand));
 
-        if (!colors.isEmpty())
-            predicates.add(joinColors.get("name").in(colors));
+        if (colors != null)
+            if (!colors.isEmpty())
+                predicates.add(joinColors.get("name").in(colors));
 
         if (inOffer)
             predicates.add(cb.isNotNull(productRoot.get("discountRate")));
