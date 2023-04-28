@@ -7,6 +7,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.JdbcTypeCode;
+import org.hibernate.type.SqlTypes;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -55,20 +57,25 @@ public class Product {
     @CreationTimestamp
     private LocalDateTime publicationDate;
 
+    @JdbcTypeCode(SqlTypes.ARRAY)
     @OneToMany(mappedBy = "product")
     private List<Review> reviews;
 
+    @JdbcTypeCode(SqlTypes.JAVA_OBJECT)
     @ManyToOne
     @JoinColumn(name = "category_id", nullable = false)
     private Category category;
 
+    @JdbcTypeCode(SqlTypes.ARRAY)
     @OneToMany(mappedBy = "product")
     private List<CartItem> cartItems;
 
+    @JdbcTypeCode(SqlTypes.JAVA_OBJECT)
     @ManyToOne
     @JoinColumn(name = "brand_id", nullable = false)
     private Brand brand;
 
+    @JdbcTypeCode(SqlTypes.ARRAY)
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(
             name = "wishlist_product",
@@ -77,9 +84,11 @@ public class Product {
     )
     private List<WishList> wishLists;
 
+    @JdbcTypeCode(SqlTypes.ARRAY)
     @OneToMany(mappedBy = "product")
     private List<Image> images;
 
+    @JdbcTypeCode(SqlTypes.ARRAY)
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(
             name = "product_color",
@@ -88,6 +97,7 @@ public class Product {
     )
     private List<Color> colors;
 
+    @JdbcTypeCode(SqlTypes.ARRAY)
     @OneToMany(mappedBy = "product")
     private List<OrderItem> orderItems;
 
