@@ -52,7 +52,8 @@ public class SecurityConfig {
                         .hasAuthority(Role.ADMIN.name())
                         .requestMatchers(
                                 HttpMethod.PATCH,
-                                "/api/products/{productId}"
+                                "/api/products/{productId}",
+                                "/api/brands/{brandId}"
                         )
                             .hasAuthority(Role.ADMIN.name())
                         .requestMatchers(
