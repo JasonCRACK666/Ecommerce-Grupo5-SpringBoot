@@ -1,6 +1,7 @@
 package com.group5.ecommerce.controller;
 
 import com.group5.ecommerce.dto.product.CreateProductDto;
+import com.group5.ecommerce.dto.product.UpdateProductDto;
 import com.group5.ecommerce.entity.enums.SearchOrder;
 import com.group5.ecommerce.entity.enums.SortBy;
 import com.group5.ecommerce.response.MessageResponse;
@@ -95,6 +96,17 @@ public class ProductController {
             @Valid CreateProductDto productData
     ) {
         return new ResponseEntity<>(this.productService.saveProduct(productData), HttpStatus.OK);
+    }
+
+    @PatchMapping(path = "{productId}")
+    public ResponseEntity<DetailProductResponse> updateProduct(
+            @PathVariable("productId") Long productId,
+            @Valid @RequestBody UpdateProductDto productData
+    ) {
+        return new ResponseEntity<>(
+                this.productService.updateProduct(productId, productData),
+                HttpStatus.OK
+        );
     }
 
     @DeleteMapping(path = "{productId}")

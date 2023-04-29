@@ -1,6 +1,7 @@
 package com.group5.ecommerce.service.product;
 
 import com.group5.ecommerce.dto.product.CreateProductDto;
+import com.group5.ecommerce.dto.product.UpdateProductDto;
 import com.group5.ecommerce.entity.enums.SearchOrder;
 import com.group5.ecommerce.entity.enums.SortBy;
 import com.group5.ecommerce.response.MessageResponse;
@@ -26,5 +27,6 @@ public interface ProductService {
     );
     DetailProductResponse detailProduct(Long productId);
     DetailProductResponse saveProduct(CreateProductDto productData);
+    DetailProductResponse updateProduct(Long productId, UpdateProductDto productData);
     MessageResponse deleteProduct(Long productId);
 }

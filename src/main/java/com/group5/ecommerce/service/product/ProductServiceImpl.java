@@ -1,6 +1,7 @@
 package com.group5.ecommerce.service.product;
 
 import com.group5.ecommerce.dto.product.CreateProductDto;
+import com.group5.ecommerce.dto.product.UpdateProductDto;
 import com.group5.ecommerce.entity.*;
 import com.group5.ecommerce.entity.enums.SearchOrder;
 import com.group5.ecommerce.entity.enums.SortBy;
@@ -202,6 +203,55 @@ public class ProductServiceImpl implements ProductService {
         savedProduct.setImages(images);
 
         return ProductMapper.INSTANCE.toResponse(savedProduct);
+    }
+
+    @Override
+    public DetailProductResponse updateProduct(Long productId, UpdateProductDto productData) {
+        Product product = this.productRepository
+                .findById(productId)
+                .orElseThrow(
+                        () -> new NotFoundReqException("El producto no existe")
+                );
+
+        if (productData.getTitle() != null)
+            product.setTitle(productData.getTitle());
+
+        if (productData.getDescription() != null)
+            product.setDescription(productData.getDescription());
+
+        if (productData.getOriginalPrice() != null)
+            product.setOriginalPrice(productData.getOriginalPrice());
+
+        if (productData.getDiscountRate() != null)
+            product.setDiscountRate(productData.getDiscountRate());
+
+        if (productData.getPointValue() != null)
+            product.setPointValue(productData.getPointValue());
+
+        if (productData.getQuantity() != null)
+            product.setQuantity(productData.getQuantity());
+
+        if (productData.getCategory() != null) {
+            var category = this.categoryRepository
+                    .findById(productData.getCategory())
+                    .orElseThrow(
+                            () -> new NotFoundReqException("La categoría no existe")
+                    );
+            product.setCategory(category);
+        }
+
+        if (productData.getBrand() != null) {
+            var brand = this.brandRepository
+                    .findById(productData.getBrand())
+                    .orElseThrow(
+                            () -> new NotFoundReqException("La marca no existe")
+                    );
+            product.setBrand(brand);
+        }
+
+        Product updatedProduct = this.productRepository.save(product);
+
+        return ProductMapper.INSTANCE.toResponse(updatedProduct);
     }
 
     @Override
