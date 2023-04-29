@@ -1,8 +1,8 @@
 package com.group5.ecommerce.entity;
 
 import com.group5.ecommerce.entity.enums.Role;
-import jakarta.persistence.*;
 
+import jakarta.persistence.*;
 import java.util.Collection;
 import java.util.List;
 import java.util.UUID;
@@ -53,11 +53,13 @@ public class User implements UserDetails {
     @Column(nullable = false)
     private String password;
 
-    private Boolean isActive = false;
+    @Column(columnDefinition = "BOOLEAN default false")
+    private Boolean isActive;
 
     @Column(name = "activate_code")
     private UUID activateCode;
 
+    @Builder.Default
     @Enumerated(EnumType.STRING)
     private Role role = Role.USER;
 

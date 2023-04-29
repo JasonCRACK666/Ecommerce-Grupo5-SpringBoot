@@ -25,7 +25,8 @@ public class CartItem {
     )
     private Long id;
 
-    private Integer count = 1;
+    @Column(columnDefinition = "INT default 1")
+    private Integer count;
 
     @ManyToOne
     @JoinColumn(name = "cart_id")

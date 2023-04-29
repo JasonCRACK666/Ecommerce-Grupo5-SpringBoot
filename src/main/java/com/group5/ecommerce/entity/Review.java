@@ -1,13 +1,15 @@
 package com.group5.ecommerce.entity;
 
 import jakarta.persistence.*;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.sql.Timestamp;
-import java.time.Instant;
+import org.hibernate.annotations.CreationTimestamp;
+
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "review")
@@ -28,11 +30,11 @@ public class Review {
     )
     private Long id;
 
-    @Column(name = "created_at")
-    private Timestamp createdAt = Timestamp.from(Instant.now());
+    @CreationTimestamp
+    private LocalDateTime createdAt;
 
-    @Column(nullable = false)
-    private Integer score = 0;
+    @Column(nullable = false, columnDefinition = "INT default 0")
+    private Integer score;
 
     @Column(columnDefinition = "TEXT")
     private String comment;

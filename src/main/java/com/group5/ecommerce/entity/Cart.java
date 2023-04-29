@@ -27,7 +27,7 @@ public class Cart {
     private Long id;
 
     @Column(columnDefinition = "INT default 0")
-    private Integer cartItems = 0;
+    private Integer cartItems;
 
     @OneToOne(mappedBy = "cart")
     private User user;
