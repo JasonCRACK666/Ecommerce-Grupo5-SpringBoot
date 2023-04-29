@@ -3,7 +3,7 @@ package com.group5.ecommerce.service.brand;
 import com.group5.ecommerce.dto.brand.CreateBrandDto;
 import com.group5.ecommerce.dto.brand.UpdateBrandDto;
 import com.group5.ecommerce.entity.Brand;
-import com.group5.ecommerce.exception.notFound.NotFoundReqException;
+import com.group5.ecommerce.exception.NotFoundException;
 import com.group5.ecommerce.repository.BrandRepository;
 import com.group5.ecommerce.repository.UserRepository;
 import com.group5.ecommerce.response.MessageResponse;
@@ -54,13 +54,13 @@ public class BrandServiceImp implements BrandService {
         var user = this.userRepository
                 .findById(userId)
                 .orElseThrow(
-                        () -> new NotFoundReqException("El usuario no existe")
+                        () -> new NotFoundException("El usuario no existe")
                 );
 
         var brand = this.brandRepository
                 .findById(brandId)
                 .orElseThrow(
-                        () -> new NotFoundReqException("La marca no existe")
+                        () -> new NotFoundException("La marca no existe")
                 );
 
         Optional<Brand> userFollowsBrand = user.getBrandsFollowing()
@@ -91,7 +91,7 @@ public class BrandServiceImp implements BrandService {
         var brand = this.brandRepository
                 .findById(brandId)
                 .orElseThrow(
-                        () -> new NotFoundReqException("La marca no existe")
+                        () -> new NotFoundException("La marca no existe")
                 );
 
         if (brandData.getName() != null)

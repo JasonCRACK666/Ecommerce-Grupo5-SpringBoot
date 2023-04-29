@@ -5,7 +5,7 @@ import com.group5.ecommerce.dto.product.UpdateProductDto;
 import com.group5.ecommerce.entity.*;
 import com.group5.ecommerce.entity.enums.SearchOrder;
 import com.group5.ecommerce.entity.enums.SortBy;
-import com.group5.ecommerce.exception.notFound.NotFoundReqException;
+import com.group5.ecommerce.exception.NotFoundException;
 import com.group5.ecommerce.repository.*;
 import com.group5.ecommerce.repository.product.ProductRepository;
 import com.group5.ecommerce.response.MessageResponse;
@@ -79,7 +79,7 @@ public class ProductServiceImpl implements ProductService {
             category = this.categoryRepository
                     .findByName(categoryName)
                     .orElseThrow(
-                            () -> new NotFoundReqException("La categoría de nombre " + categoryName + " no existe")
+                            () -> new NotFoundException("La categoría de nombre " + categoryName + " no existe")
                     );
 
         Brand brand = null;
@@ -87,7 +87,7 @@ public class ProductServiceImpl implements ProductService {
             brand = this.brandRepository
                     .findByName(brandName)
                     .orElseThrow(
-                            () -> new NotFoundReqException("La marca de nombre " + brandName + " no existe")
+                            () -> new NotFoundException("La marca de nombre " + brandName + " no existe")
                     );
 
         if (colorNames != null)
@@ -95,7 +95,7 @@ public class ProductServiceImpl implements ProductService {
                 this.colorRepository
                         .findByName(colorName)
                         .orElseThrow(
-                                () -> new NotFoundReqException("El color de nombre " + colorName + " no existe")
+                                () -> new NotFoundException("El color de nombre " + colorName + " no existe")
                         );
             }
 
@@ -129,7 +129,7 @@ public class ProductServiceImpl implements ProductService {
     public DetailProductResponse detailProduct(Long productId) {
         Optional<Product> product = this.productRepository.findById(productId);
 
-        if (product.isEmpty()) throw new NotFoundReqException("El producto de ID " + productId + " no existe");
+        if (product.isEmpty()) throw new NotFoundException("El producto de ID " + productId + " no existe");
 
         return ProductMapper.INSTANCE.toResponse(product.get());
     }
@@ -151,7 +151,7 @@ public class ProductServiceImpl implements ProductService {
             var color = this.colorRepository
                     .findById(colorId)
                     .orElseThrow(
-                            () -> new NotFoundReqException(
+                            () -> new NotFoundException(
                                     "El color de ID " + colorId + " no existe"
                             )
                     );
@@ -163,7 +163,7 @@ public class ProductServiceImpl implements ProductService {
         Category category = this.categoryRepository
                 .findById(productData.getCategory())
                 .orElseThrow(
-                        () -> new NotFoundReqException(
+                        () -> new NotFoundException(
                                 "La categoría de ID" + productData.getCategory() + " no existe"
                         )
                 );
@@ -173,7 +173,7 @@ public class ProductServiceImpl implements ProductService {
         Brand brand = this.brandRepository
                 .findById(productData.getBrand())
                 .orElseThrow(
-                        () -> new NotFoundReqException(
+                        () -> new NotFoundException(
                                 "La marca de ID " + productData.getBrand() + " no existe"
                         )
                 );
@@ -210,7 +210,7 @@ public class ProductServiceImpl implements ProductService {
         Product product = this.productRepository
                 .findById(productId)
                 .orElseThrow(
-                        () -> new NotFoundReqException("El producto no existe")
+                        () -> new NotFoundException("El producto no existe")
                 );
 
         if (productData.getTitle() != null)
@@ -235,7 +235,7 @@ public class ProductServiceImpl implements ProductService {
             var category = this.categoryRepository
                     .findById(productData.getCategory())
                     .orElseThrow(
-                            () -> new NotFoundReqException("La categoría no existe")
+                            () -> new NotFoundException("La categoría no existe")
                     );
             product.setCategory(category);
         }
@@ -244,7 +244,7 @@ public class ProductServiceImpl implements ProductService {
             var brand = this.brandRepository
                     .findById(productData.getBrand())
                     .orElseThrow(
-                            () -> new NotFoundReqException("La marca no existe")
+                            () -> new NotFoundException("La marca no existe")
                     );
             product.setBrand(brand);
         }
@@ -259,7 +259,7 @@ public class ProductServiceImpl implements ProductService {
         var product = this.productRepository
                 .findById(productId)
                 .orElseThrow(
-                        () -> new NotFoundReqException("El producto no existe")
+                        () -> new NotFoundException("El producto no existe")
                 );
 
         this.productRepository.delete(product);

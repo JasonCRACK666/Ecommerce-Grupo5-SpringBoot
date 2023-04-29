@@ -9,7 +9,7 @@ import com.group5.ecommerce.entity.User;
 import com.group5.ecommerce.entity.WishList;
 import com.group5.ecommerce.entity.enums.Role;
 
-import com.group5.ecommerce.exception.notFound.NotFoundReqException;
+import com.group5.ecommerce.exception.NotFoundException;
 import com.group5.ecommerce.repository.AccountRepository;
 import com.group5.ecommerce.repository.CartRepository;
 import com.group5.ecommerce.repository.UserRepository;
@@ -94,7 +94,7 @@ public class AuthServiceImp implements AuthService {
     public MessageResponse activateUser(UUID activateCode) {
         Optional<User> user = this.userRepository.findByActivateCode(activateCode);
 
-        if (user.isEmpty()) throw new NotFoundReqException("El usuario no existe");
+        if (user.isEmpty()) throw new NotFoundException("El usuario no existe");
 
         user.get().setIsActive(true);
 
