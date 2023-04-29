@@ -1,7 +1,7 @@
 package com.group5.ecommerce.controller;
 
 import com.group5.ecommerce.dto.brand.CreateBrandDto;
-import com.group5.ecommerce.entity.Brand;
+import com.group5.ecommerce.response.brand.BrandResponse;
 import com.group5.ecommerce.service.brand.BrandServiceImp;
 
 import jakarta.validation.Valid;
@@ -20,7 +20,7 @@ public class BrandController {
     private BrandServiceImp brandService;
 
     @PostMapping
-    public ResponseEntity<?> createBrand(
+    public ResponseEntity<BrandResponse> createBrand(
             @Valid CreateBrandDto brandData
     ) {
         return new ResponseEntity<>(this.brandService.saveBrand(brandData), HttpStatus.OK);
