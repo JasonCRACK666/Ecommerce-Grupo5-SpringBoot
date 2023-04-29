@@ -63,7 +63,7 @@ public class SecurityConfig {
                             .authenticated()
                         .requestMatchers(
                                 HttpMethod.POST,
-                                ""
+                                "/api/brands/follow"
                         )
                             .authenticated()
                         .requestMatchers(

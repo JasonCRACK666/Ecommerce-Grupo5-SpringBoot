@@ -1,7 +1,9 @@
 package com.group5.ecommerce.controller;
 
 import com.group5.ecommerce.dto.brand.CreateBrandDto;
+import com.group5.ecommerce.dto.brand.FollowBrandDto;
 import com.group5.ecommerce.dto.brand.UpdateBrandDto;
+import com.group5.ecommerce.response.MessageResponse;
 import com.group5.ecommerce.response.brand.DetailBrandResponse;
 import com.group5.ecommerce.service.brand.BrandServiceImp;
 
@@ -23,6 +25,14 @@ public class BrandController {
             @Valid CreateBrandDto brandData
     ) {
         return new ResponseEntity<>(this.brandService.saveBrand(brandData), HttpStatus.OK);
+    }
+
+    @PostMapping(path = "follow")
+    public ResponseEntity<MessageResponse> followBrand(
+            @RequestAttribute("user") Long userId,
+            @Valid @RequestBody FollowBrandDto brandData
+    ) {
+        return new ResponseEntity<>(this.brandService.followBrand(userId, brandData.getBrandId()), HttpStatus.OK);
     }
 
     @PatchMapping(path = "{brandId}")

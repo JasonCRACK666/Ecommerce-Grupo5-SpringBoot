@@ -5,6 +5,8 @@ import com.group5.ecommerce.dto.brand.UpdateBrandDto;
 import com.group5.ecommerce.entity.Brand;
 import com.group5.ecommerce.exception.notFound.NotFoundReqException;
 import com.group5.ecommerce.repository.BrandRepository;
+import com.group5.ecommerce.repository.UserRepository;
+import com.group5.ecommerce.response.MessageResponse;
 import com.group5.ecommerce.response.brand.BrandMapper;
 import com.group5.ecommerce.response.brand.DetailBrandResponse;
 import com.group5.ecommerce.utils.CloudinaryUtils;
@@ -14,6 +16,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -22,6 +25,7 @@ public class BrandServiceImp implements BrandService {
     private final CloudinaryUtils cloudinaryUtils;
 
     private final BrandRepository brandRepository;
+    private final UserRepository userRepository;
 
     @Override
     public DetailBrandResponse saveBrand(CreateBrandDto brandData) {
@@ -43,6 +47,43 @@ public class BrandServiceImp implements BrandService {
         var savedBrand = this.brandRepository.save(brand);
 
         return BrandMapper.INSTANCE.toDetailResponse(savedBrand);
+    }
+
+    @Override
+    public MessageResponse followBrand(Long userId, Long brandId) {
+        var user = this.userRepository
+                .findById(userId)
+                .orElseThrow(
+                        () -> new NotFoundReqException("El usuario no existe")
+                );
+
+        var brand = this.brandRepository
+                .findById(brandId)
+                .orElseThrow(
+                        () -> new NotFoundReqException("La marca no existe")
+                );
+
+        Optional<Brand> userFollowsBrand = user.getBrandsFollowing()
+                .stream()
+                .filter(b -> b.getId().equals(brand.getId()))
+                .findFirst();
+
+        var followings = user.getBrandsFollowing();
+        String message;
+
+        if (userFollowsBrand.isEmpty()) {
+            followings.add(brand);
+            user.setBrandsFollowing(followings);
+            message = "El usuario " + user.getUserName() + " ha empezado a seguir a la marca " + brand.getName();
+        } else {
+            followings.remove(userFollowsBrand.get());
+            user.setBrandsFollowing(followings);
+            message = "El usuario " + user.getUserName() + " ha dejado de seguir a la marca " + brand.getName();
+        }
+
+        this.userRepository.save(user);
+
+        return new MessageResponse(message);
     }
 
     @Override
