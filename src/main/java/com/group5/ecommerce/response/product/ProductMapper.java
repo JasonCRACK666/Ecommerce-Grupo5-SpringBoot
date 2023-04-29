@@ -1,6 +1,5 @@
 package com.group5.ecommerce.response.product;
 
-import com.group5.ecommerce.entity.Image;
 import com.group5.ecommerce.entity.Product;
 
 import com.group5.ecommerce.response.brand.BrandResponse;
@@ -8,7 +7,6 @@ import com.group5.ecommerce.response.category.CategoryResponse;
 import com.group5.ecommerce.response.color.ColorResponse;
 import com.group5.ecommerce.response.image.ImageResponse;
 import org.mapstruct.Mapper;
-import org.mapstruct.Named;
 import org.mapstruct.factory.Mappers;
 
 import java.util.List;
@@ -52,13 +50,6 @@ public interface ProductMapper {
                                 .collect(Collectors.toList())
                 ))
                 .collect(Collectors.toList());
-    }
-
-    @Named("imagesToImageResponse")
-    default ImageResponse imagesToImageResponse(List<Image> images) {
-        return images.stream().findFirst()
-                .map(image -> new ImageResponse(image.getId(), image.getImageUrl()))
-                .orElse(null);
     }
 
 }
