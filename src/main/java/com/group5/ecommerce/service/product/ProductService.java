@@ -3,6 +3,7 @@ package com.group5.ecommerce.service.product;
 import com.group5.ecommerce.dto.product.CreateProductDto;
 import com.group5.ecommerce.entity.enums.SearchOrder;
 import com.group5.ecommerce.entity.enums.SortBy;
+import com.group5.ecommerce.response.MessageResponse;
 import com.group5.ecommerce.response.product.DetailProductResponse;
 import com.group5.ecommerce.response.product.PaginatedProductsResponse;
 
@@ -25,4 +26,5 @@ public interface ProductService {
     );
     DetailProductResponse detailProduct(Long productId);
     DetailProductResponse saveProduct(CreateProductDto productData);
+    MessageResponse deleteProduct(Long productId);
 }

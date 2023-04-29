@@ -3,6 +3,7 @@ package com.group5.ecommerce.controller;
 import com.group5.ecommerce.dto.product.CreateProductDto;
 import com.group5.ecommerce.entity.enums.SearchOrder;
 import com.group5.ecommerce.entity.enums.SortBy;
+import com.group5.ecommerce.response.MessageResponse;
 import com.group5.ecommerce.response.product.DetailProductResponse;
 import com.group5.ecommerce.response.product.PaginatedProductsResponse;
 import com.group5.ecommerce.service.product.ProductServiceImpl;
@@ -94,6 +95,13 @@ public class ProductController {
             @Valid CreateProductDto productData
     ) {
         return new ResponseEntity<>(this.productService.saveProduct(productData), HttpStatus.OK);
+    }
+
+    @DeleteMapping(path = "{productId}")
+    public ResponseEntity<MessageResponse> deleteProduct(
+            @PathVariable("productId") Long productId
+    ) {
+        return new ResponseEntity<>(this.productService.deleteProduct(productId), HttpStatus.OK);
     }
 
 }

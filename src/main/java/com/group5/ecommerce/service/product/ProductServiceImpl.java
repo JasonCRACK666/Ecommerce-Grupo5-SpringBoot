@@ -7,6 +7,7 @@ import com.group5.ecommerce.entity.enums.SortBy;
 import com.group5.ecommerce.exception.notFound.NotFoundReqException;
 import com.group5.ecommerce.repository.*;
 import com.group5.ecommerce.repository.product.ProductRepository;
+import com.group5.ecommerce.response.MessageResponse;
 import com.group5.ecommerce.response.product.DetailProductResponse;
 import com.group5.ecommerce.response.product.PaginatedProductsResponse;
 import com.group5.ecommerce.response.product.ProductMapper;
@@ -201,6 +202,19 @@ public class ProductServiceImpl implements ProductService {
         savedProduct.setImages(images);
 
         return ProductMapper.INSTANCE.toResponse(savedProduct);
+    }
+
+    @Override
+    public MessageResponse deleteProduct(Long productId) {
+        var product = this.productRepository
+                .findById(productId)
+                .orElseThrow(
+                        () -> new NotFoundReqException("El producto no existe")
+                );
+
+        this.productRepository.delete(product);
+
+        return new MessageResponse("El producto de ID " + productId + " ha sido eliminado");
     }
 
 }
