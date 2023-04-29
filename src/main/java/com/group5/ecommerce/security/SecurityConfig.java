@@ -47,7 +47,7 @@ public class SecurityConfig {
                         .hasAuthority(Role.ADMIN.name())
                         .requestMatchers(
                                 HttpMethod.DELETE,
-                                "/api/products/**"
+                                "/api/products/{productId}"
                         )
                         .hasAuthority(Role.ADMIN.name())
                         .requestMatchers(
