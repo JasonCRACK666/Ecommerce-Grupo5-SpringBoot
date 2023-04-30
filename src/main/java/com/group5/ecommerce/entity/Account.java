@@ -31,8 +31,9 @@ public class Account {
     private String avatar;
     private String banner;
 
-    @Column(columnDefinition = "INT default 0")
-    private Integer points;
+    @Builder.Default
+    @Column(columnDefinition = "integer default 0")
+    private Integer points = 0;
 
     @Builder.Default
     @Enumerated(EnumType.STRING)
