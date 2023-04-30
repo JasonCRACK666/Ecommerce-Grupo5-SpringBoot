@@ -32,8 +32,9 @@ public class Account {
     private String banner;
 
     @Column(columnDefinition = "INT default 0")
-    private Integer points = 0;
+    private Integer points;
 
+    @Builder.Default
     @Enumerated(EnumType.STRING)
     private Theme theme = Theme.LIGHT;
 

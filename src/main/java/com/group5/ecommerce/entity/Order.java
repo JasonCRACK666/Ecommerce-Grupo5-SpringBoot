@@ -9,8 +9,10 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import org.hibernate.annotations.CreationTimestamp;
+
 import java.math.BigDecimal;
-import java.sql.Date;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 
@@ -33,6 +35,7 @@ public class Order {
     )
     private Long id;
 
+    @Builder.Default
     @Enumerated(EnumType.STRING)
     private OrderStatus status = OrderStatus.STARTING;
 
@@ -66,8 +69,8 @@ public class Order {
     @Column(name = "shipping_time", nullable = false)
     private Integer shippingTime;
 
-    @Column(name = "date_issued")
-    private Date dateIssued = new Date(System.currentTimeMillis());
+    @CreationTimestamp
+    private LocalDateTime dateIssued;
 
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
