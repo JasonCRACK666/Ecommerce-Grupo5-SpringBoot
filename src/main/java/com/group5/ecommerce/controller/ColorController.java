@@ -1,47 +1,35 @@
 package com.group5.ecommerce.controller;
 
+import com.group5.ecommerce.dto.color.CreateColorDto;
 import com.group5.ecommerce.entity.Color;
+import com.group5.ecommerce.response.MessageResponse;
 import com.group5.ecommerce.response.SendListResponse;
-import com.group5.ecommerce.service.colors.ColorServiceImp;
+import com.group5.ecommerce.service.colors.ColorServiceImpl;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.Optional;
 
 @RestController
 @RequestMapping(path = "/api/colors")
 public class ColorController {
 
     @Autowired
-    private ColorServiceImp colorServiceImp;
+    private ColorServiceImpl colorService;
 
     @GetMapping
-    public ResponseEntity<SendListResponse<Color>> getAllColor(){
-        SendListResponse<Color> color = new SendListResponse<>(this.colorServiceImp.getAllColor());
-        return new ResponseEntity<>(color, HttpStatus.OK);
+    public ResponseEntity<SendListResponse<Color>> getAllColor() {
+        return new ResponseEntity<>(this.colorService.getAllColor(), HttpStatus.OK);
     }
 
     @PostMapping
-    public ResponseEntity<?> create(@RequestBody Color color){
-        return ResponseEntity.status(HttpStatus.CREATED).body(colorServiceImp.save(color));
-    }
-    @GetMapping("/{id}")
-    public  ResponseEntity<?> read(@PathVariable Long id){
-        Optional<Color> colors= colorServiceImp.findById(id);
-        if(!colors.isPresent()){
-            return ResponseEntity.notFound().build();
-        }
-        return ResponseEntity.ok(colors);
+    public ResponseEntity<Color> create(@RequestBody CreateColorDto colorData) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(colorService.save(colorData));
     }
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<?> delete(@PathVariable Long id){
-        if(!colorServiceImp.findById(id).isPresent()){
-            return  ResponseEntity.notFound().build();
-        }
-        colorServiceImp.deleteById(id);
-        return  ResponseEntity.ok().build();
+    @DeleteMapping("/{colorId}")
+    public ResponseEntity<MessageResponse> delete(@PathVariable Long colorId) {
+        return new ResponseEntity<>(this.colorService.deleteColor(colorId), HttpStatus.OK);
     }
 }
