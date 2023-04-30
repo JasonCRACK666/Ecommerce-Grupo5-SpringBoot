@@ -31,4 +31,17 @@ public class ApiExceptionHandle {
 
         return new ResponseEntity<>(errorResponse, HttpStatus.UNAUTHORIZED);
     }
+
+    @ExceptionHandler(ResourceNotUploadedException.class)
+    public ResponseEntity<ErrorResponse> handleResourceNotUploadedException(
+            ResourceNotUploadedException e
+    ) {
+        var errorResponse = ErrorResponse.builder()
+                .message(e.getMessage())
+                .code(HttpStatus.BAD_REQUEST.value())
+                .status(HttpStatus.BAD_REQUEST)
+                .build();
+
+        return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
+    }
 }
