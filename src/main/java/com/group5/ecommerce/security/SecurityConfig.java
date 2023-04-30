@@ -73,7 +73,7 @@ public class SecurityConfig {
                             .authenticated()
                         .requestMatchers(
                                 HttpMethod.PATCH,
-                                ""
+                                "/api/account/{accountId}"
                         )
                         .authenticated()
                         .anyRequest()
