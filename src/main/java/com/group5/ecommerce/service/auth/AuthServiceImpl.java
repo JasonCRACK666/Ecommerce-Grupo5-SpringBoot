@@ -8,6 +8,7 @@ import com.group5.ecommerce.entity.User;
 import com.group5.ecommerce.entity.WishList;
 import com.group5.ecommerce.entity.enums.Role;
 import com.group5.ecommerce.exception.NotFoundException;
+import com.group5.ecommerce.exception.UserAccountNotActivatedException;
 import com.group5.ecommerce.repository.AccountRepository;
 import com.group5.ecommerce.repository.CartRepository;
 import com.group5.ecommerce.repository.UserRepository;
@@ -30,6 +31,7 @@ import java.util.UUID;
 @Service
 @RequiredArgsConstructor
 public class AuthServiceImpl implements AuthService {
+
     private final PasswordEncoder passwordEncoder;
     private final JwtUtils jwtUtils;
     private final AuthenticationManager authenticationManager;
@@ -40,16 +42,22 @@ public class AuthServiceImpl implements AuthService {
     private final WishListRepository wishListRepository;
 
     @Override
-    public LoginResponse login(LoginDto loginData) {
+    public LoginResponse login(LoginDto loginData) throws UserAccountNotActivatedException {
+        var user = this.userRepository
+                .findByEmail(loginData.getEmail())
+                .orElseThrow(
+                        () -> new NotFoundException("El correo electrónico es incorrecto")
+                );
+
+        if (!user.getIsActive())
+            throw new UserAccountNotActivatedException();
+
         authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
                         loginData.getEmail(),
                         loginData.getPassword()
                 )
         );
-
-        var user = this.userRepository.findByEmail(loginData.getEmail())
-                .orElseThrow();
 
         var jwtToken = this.jwtUtils.generateToken(user);
 

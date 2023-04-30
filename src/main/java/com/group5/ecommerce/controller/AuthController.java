@@ -2,6 +2,7 @@ package com.group5.ecommerce.controller;
 
 import com.group5.ecommerce.dto.auth.LoginDto;
 import com.group5.ecommerce.dto.auth.RegisterUserDto;
+import com.group5.ecommerce.exception.UserAccountNotActivatedException;
 import com.group5.ecommerce.response.MessageResponse;
 import com.group5.ecommerce.response.auth.LoginResponse;
 import com.group5.ecommerce.response.auth.RegisterUserResponse;
@@ -25,7 +26,7 @@ public class AuthController {
     @PostMapping(path = "login")
     public ResponseEntity<LoginResponse> login(
             @Valid @RequestBody LoginDto loginData
-    ) {
+    ) throws UserAccountNotActivatedException {
         return new ResponseEntity<>(this.authService.login(loginData), HttpStatus.OK);
     }
 

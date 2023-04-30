@@ -44,4 +44,17 @@ public class ApiExceptionHandle {
 
         return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
     }
+
+    @ExceptionHandler(UserAccountNotActivatedException.class)
+    public ResponseEntity<ErrorResponse> handleUserAccountNotActivatedException(
+            UserAccountNotActivatedException e
+    ) {
+        var errorResponse = ErrorResponse.builder()
+                .message(e.getMessage())
+                .code(HttpStatus.BAD_REQUEST.value())
+                .status(HttpStatus.BAD_REQUEST)
+                .build();
+
+        return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
+    }
 }
