@@ -6,6 +6,7 @@ import com.group5.ecommerce.dto.auth.RegisterUserDto;
 import com.group5.ecommerce.exception.UserAccountIsActivatedException;
 import com.group5.ecommerce.exception.UserAccountNotActivatedException;
 import com.group5.ecommerce.response.MessageResponse;
+import com.group5.ecommerce.response.account.AccountResponse;
 import com.group5.ecommerce.response.auth.LoginResponse;
 import com.group5.ecommerce.response.auth.RegisterUserResponse;
 import com.group5.ecommerce.service.auth.AuthService;
@@ -22,6 +23,13 @@ import org.springframework.web.bind.annotation.*;
 public class AuthController {
     @Autowired
     private AuthService authService;
+
+    @GetMapping(path = "me")
+    public ResponseEntity<AccountResponse> me(
+            @RequestAttribute("user") Long userId
+    ) {
+        return new ResponseEntity<>(this.authService.getMe(userId), HttpStatus.OK);
+    }
 
     @PostMapping(path = "login")
     public ResponseEntity<LoginResponse> login(

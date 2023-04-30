@@ -59,7 +59,7 @@ public class SecurityConfig {
                             .hasAuthority(Role.ADMIN.name())
                         .requestMatchers(
                                 HttpMethod.GET,
-                                ""
+                                "/api/auth/me"
                         )
                             .authenticated()
                         .requestMatchers(

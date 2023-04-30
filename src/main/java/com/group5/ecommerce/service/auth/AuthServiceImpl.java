@@ -15,6 +15,8 @@ import com.group5.ecommerce.repository.CartRepository;
 import com.group5.ecommerce.repository.UserRepository;
 import com.group5.ecommerce.repository.WishListRepository;
 import com.group5.ecommerce.response.MessageResponse;
+import com.group5.ecommerce.response.account.AccountMapper;
+import com.group5.ecommerce.response.account.AccountResponse;
 import com.group5.ecommerce.response.auth.LoginResponse;
 import com.group5.ecommerce.response.auth.RegisterUserResponse;
 import com.group5.ecommerce.utils.JwtUtils;
@@ -40,6 +42,17 @@ public class AuthServiceImpl implements AuthService {
     private final CartRepository cartRepository;
     private final AccountRepository accountRepository;
     private final WishListRepository wishListRepository;
+
+    @Override
+    public AccountResponse getMe(Long userId) {
+        var user = this.userRepository
+                .findById(userId)
+                .orElseThrow(
+                        () -> new NotFoundException("La cuenta no existe")
+                );
+
+        return AccountMapper.INSTANCE.toResponse(user.getAccount(), user);
+    }
 
     @Override
     public LoginResponse login(LoginDto loginData) throws UserAccountNotActivatedException {
