@@ -4,7 +4,7 @@ import com.group5.ecommerce.dto.color.CreateColorDto;
 import com.group5.ecommerce.entity.Color;
 import com.group5.ecommerce.response.MessageResponse;
 import com.group5.ecommerce.response.SendListResponse;
-import com.group5.ecommerce.service.colors.ColorServiceImpl;
+import com.group5.ecommerce.service.color.ColorServiceImpl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

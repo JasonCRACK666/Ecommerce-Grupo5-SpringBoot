@@ -1,4 +1,4 @@
-package com.group5.ecommerce.service.colors;
+package com.group5.ecommerce.service.color;
 
 import com.group5.ecommerce.dto.color.CreateColorDto;
 import com.group5.ecommerce.entity.Color;
