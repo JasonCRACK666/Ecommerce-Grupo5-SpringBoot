@@ -4,7 +4,7 @@ import com.group5.ecommerce.dto.account.UpdateAccountDto;
 import com.group5.ecommerce.exception.ResourceNotUploadedException;
 import com.group5.ecommerce.exception.UserIsNotOwnerException;
 import com.group5.ecommerce.response.account.DetailAccountResponse;
-import com.group5.ecommerce.service.account.AccountServiceImpl;
+import com.group5.ecommerce.service.account.AccountService;
 
 import jakarta.validation.Valid;
 
@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.*;
 public class AccountController {
 
     @Autowired
-    private AccountServiceImpl accountService;
+    private AccountService accountService;
 
     @PatchMapping(path = "{accountId}")
     public ResponseEntity<DetailAccountResponse> updateAccount(

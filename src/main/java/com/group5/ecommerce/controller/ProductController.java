@@ -7,7 +7,7 @@ import com.group5.ecommerce.entity.enums.SortBy;
 import com.group5.ecommerce.response.MessageResponse;
 import com.group5.ecommerce.response.product.DetailProductResponse;
 import com.group5.ecommerce.response.product.PaginatedProductsResponse;
-import com.group5.ecommerce.service.product.ProductServiceImpl;
+import com.group5.ecommerce.service.product.ProductService;
 import com.group5.ecommerce.utils.ApiConstants;
 
 import jakarta.validation.Valid;
@@ -24,7 +24,7 @@ import java.util.List;
 @RequestMapping(path = "api/products")
 public class ProductController {
     @Autowired
-    private ProductServiceImpl productService;
+    private ProductService productService;
 
     @GetMapping
     public ResponseEntity<PaginatedProductsResponse> products(

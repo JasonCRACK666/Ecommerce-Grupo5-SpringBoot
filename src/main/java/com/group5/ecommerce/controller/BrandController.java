@@ -5,7 +5,7 @@ import com.group5.ecommerce.dto.brand.FollowBrandDto;
 import com.group5.ecommerce.dto.brand.UpdateBrandDto;
 import com.group5.ecommerce.response.MessageResponse;
 import com.group5.ecommerce.response.brand.DetailBrandResponse;
-import com.group5.ecommerce.service.brand.BrandServiceImp;
+import com.group5.ecommerce.service.brand.BrandService;
 
 import jakarta.validation.Valid;
 
@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping(path = "api/brands")
 public class BrandController {
     @Autowired
-    private BrandServiceImp brandService;
+    private BrandService brandService;
 
     @PostMapping
     public ResponseEntity<DetailBrandResponse> createBrand(
