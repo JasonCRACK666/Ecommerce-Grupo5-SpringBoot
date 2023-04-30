@@ -8,6 +8,7 @@ import com.group5.ecommerce.entity.User;
 import com.group5.ecommerce.entity.WishList;
 import com.group5.ecommerce.entity.enums.Role;
 import com.group5.ecommerce.exception.NotFoundException;
+import com.group5.ecommerce.exception.UserAccountIsActivatedException;
 import com.group5.ecommerce.exception.UserAccountNotActivatedException;
 import com.group5.ecommerce.repository.AccountRepository;
 import com.group5.ecommerce.repository.CartRepository;
@@ -25,7 +26,6 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -95,16 +95,21 @@ public class AuthServiceImpl implements AuthService {
     }
 
     @Override
-    public MessageResponse activateUser(UUID activateCode) {
-        Optional<User> user = this.userRepository.findByActivateCode(activateCode);
+    public MessageResponse activateUser(UUID activateCode) throws UserAccountIsActivatedException {
+        var user = this.userRepository
+                .findByActivateCode(activateCode)
+                .orElseThrow(
+                        () -> new NotFoundException("La cuenta no existe")
+                );
 
-        if (user.isEmpty()) throw new NotFoundException("El usuario no existe");
+        if (user.getIsActive())
+            throw new UserAccountIsActivatedException();
 
-        user.get().setIsActive(true);
+        user.setIsActive(true);
 
-        this.userRepository.save(user.get());
+        this.userRepository.save(user);
 
-        return new MessageResponse("Cuenta activada");
+        return new MessageResponse("Su cuenta ha sido activada, bienvenido " + user.getUserName());
     }
 
 }
