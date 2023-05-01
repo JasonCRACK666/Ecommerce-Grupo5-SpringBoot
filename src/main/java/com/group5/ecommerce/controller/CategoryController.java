@@ -1,8 +1,9 @@
 package com.group5.ecommerce.controller;
 
+import com.group5.ecommerce.dto.category.CreateCategoryDto;
 import com.group5.ecommerce.dto.category.UpdateCategoryDto;
-import com.group5.ecommerce.entity.Category;
 import com.group5.ecommerce.response.SendListResponse;
+import com.group5.ecommerce.response.category.CategoryResponse;
 import com.group5.ecommerce.response.category.DetailCategoryResponse;
 import com.group5.ecommerce.service.category.CategoryServiceImpl;
 
@@ -14,15 +15,22 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("api/categories")
+@RequestMapping(path = "api/categories")
 public class CategoryController {
 
     @Autowired
     private CategoryServiceImpl categoryService;
 
     @GetMapping
-    public ResponseEntity<SendListResponse<Category>> getAllCategories() {
+    public ResponseEntity<SendListResponse<CategoryResponse>> getAllCategories() {
         return new ResponseEntity<>(this.categoryService.getAllCategory(), HttpStatus.OK);
+    }
+
+    @PostMapping
+    public ResponseEntity<CategoryResponse> createCategory(
+            @Valid @RequestBody CreateCategoryDto categoryData
+    ) {
+        return new ResponseEntity<>(this.categoryService.createCategory(categoryData), HttpStatus.OK);
     }
 
     @PutMapping(path = "{categoryId}")

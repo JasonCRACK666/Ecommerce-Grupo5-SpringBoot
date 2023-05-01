@@ -7,7 +7,9 @@ import com.group5.ecommerce.exception.NotFoundException;
 import com.group5.ecommerce.repository.BrandRepository;
 import com.group5.ecommerce.repository.UserRepository;
 import com.group5.ecommerce.response.MessageResponse;
+import com.group5.ecommerce.response.SendListResponse;
 import com.group5.ecommerce.response.brand.BrandMapper;
+import com.group5.ecommerce.response.brand.BrandResponse;
 import com.group5.ecommerce.response.brand.DetailBrandResponse;
 import com.group5.ecommerce.utils.CloudinaryUtils;
 
@@ -16,6 +18,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -26,6 +29,13 @@ public class BrandServiceImpl implements BrandService {
 
     private final BrandRepository brandRepository;
     private final UserRepository userRepository;
+
+    @Override
+    public SendListResponse<BrandResponse> getAllBrands() {
+        List<Brand> brands = this.brandRepository.findAll();
+        List<BrandResponse> brandResponses = BrandMapper.INSTANCE.toListResponse(brands);
+        return new SendListResponse<>(brandResponses);
+    }
 
     @Override
     public DetailBrandResponse saveBrand(CreateBrandDto brandData) {

@@ -4,6 +4,8 @@ import com.group5.ecommerce.dto.brand.CreateBrandDto;
 import com.group5.ecommerce.dto.brand.FollowBrandDto;
 import com.group5.ecommerce.dto.brand.UpdateBrandDto;
 import com.group5.ecommerce.response.MessageResponse;
+import com.group5.ecommerce.response.SendListResponse;
+import com.group5.ecommerce.response.brand.BrandResponse;
 import com.group5.ecommerce.response.brand.DetailBrandResponse;
 import com.group5.ecommerce.service.brand.BrandService;
 
@@ -17,8 +19,14 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping(path = "api/brands")
 public class BrandController {
+
     @Autowired
     private BrandService brandService;
+
+    @GetMapping
+    public ResponseEntity<SendListResponse<BrandResponse>> brands() {
+        return new ResponseEntity<>(this.brandService.getAllBrands(), HttpStatus.OK);
+    }
 
     @PostMapping
     public ResponseEntity<DetailBrandResponse> createBrand(

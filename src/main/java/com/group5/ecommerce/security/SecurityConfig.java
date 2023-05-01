@@ -38,7 +38,8 @@ public class SecurityConfig {
                                 HttpMethod.POST,
                                 "/api/brands",
                                 "/api/products",
-                                "/api/colors"
+                                "/api/colors",
+                                "/api/categories"
                         )
                             .hasAuthority(Role.ADMIN.name())
                         .requestMatchers(
