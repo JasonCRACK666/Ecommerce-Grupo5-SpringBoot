@@ -2,6 +2,7 @@ package com.group5.ecommerce.service.review;
 
 import com.group5.ecommerce.entity.Product;
 import com.group5.ecommerce.exception.NotFoundException;
+import com.group5.ecommerce.repository.ReviewRepository;
 import com.group5.ecommerce.repository.product.ProductRepository;
 import com.group5.ecommerce.response.SendListResponse;
 import com.group5.ecommerce.response.review.ReviewMapper;
@@ -17,6 +18,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class ReviewServiceImpl implements ReviewService {
 
+    private final ReviewRepository reviewRepository;
     private final ProductRepository productRepository;
 
     @Override
@@ -30,6 +32,17 @@ public class ReviewServiceImpl implements ReviewService {
         List<ReviewResponse> reviewResponses = ReviewMapper.INSTANCE.toListResponse(product.getReviews());
 
         return new SendListResponse<>(reviewResponses);
+    }
+
+    @Override
+    public ReviewResponse detailReview(Long reviewId) {
+        var review = this.reviewRepository
+                .findById(reviewId)
+                .orElseThrow(
+                        () -> new NotFoundException("La reseña no existe")
+                );
+
+        return ReviewMapper.INSTANCE.toResponse(review);
     }
 
 }
