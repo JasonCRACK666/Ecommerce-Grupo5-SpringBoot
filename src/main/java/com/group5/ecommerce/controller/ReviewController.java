@@ -1,8 +1,11 @@
 package com.group5.ecommerce.controller;
 
+import com.group5.ecommerce.dto.review.CreateReviewDto;
 import com.group5.ecommerce.response.SendListResponse;
 import com.group5.ecommerce.response.review.ReviewResponse;
 import com.group5.ecommerce.service.review.ReviewService;
+
+import jakarta.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -28,6 +31,18 @@ public class ReviewController {
             @PathVariable("reviewId") Long reviewId
     ) {
        return new ResponseEntity<>(this.reviewService.detailReview(reviewId), HttpStatus.OK);
+    }
+
+    @PostMapping(path = "product/{productId}")
+    public ResponseEntity<ReviewResponse> createReview(
+            @PathVariable("productId") Long productId,
+            @Valid @RequestBody CreateReviewDto reviewData,
+            @RequestAttribute("user") Long userId
+    ) {
+        return new ResponseEntity<>(
+                this.reviewService.createReview(userId, productId, reviewData),
+                HttpStatus.OK
+        );
     }
 
 }

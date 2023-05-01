@@ -68,7 +68,8 @@ public class SecurityConfig {
                             .authenticated()
                         .requestMatchers(
                                 HttpMethod.POST,
-                                "/api/brands/follow"
+                                "/api/brands/follow",
+                                "/api/reviews/product/{productId}"
                         )
                             .authenticated()
                         .requestMatchers(

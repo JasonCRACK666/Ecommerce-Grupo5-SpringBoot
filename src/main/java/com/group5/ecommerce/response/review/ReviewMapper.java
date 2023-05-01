@@ -14,7 +14,7 @@ public interface ReviewMapper {
     ReviewMapper INSTANCE = Mappers.getMapper(ReviewMapper.class);
 
     @Mapping(source = "review.id", target = "id")
-    @Mapping(source = "review.user.username", target = "username")
+    @Mapping(source = "review.user.userName", target = "username")
     @Mapping(source = "review.user.account.avatar", target = "avatar")
     ReviewResponse toResponse(Review review);
 

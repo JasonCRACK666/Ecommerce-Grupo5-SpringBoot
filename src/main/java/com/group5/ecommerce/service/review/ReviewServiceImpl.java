@@ -1,8 +1,11 @@
 package com.group5.ecommerce.service.review;
 
+import com.group5.ecommerce.dto.review.CreateReviewDto;
 import com.group5.ecommerce.entity.Product;
+import com.group5.ecommerce.entity.Review;
 import com.group5.ecommerce.exception.NotFoundException;
 import com.group5.ecommerce.repository.ReviewRepository;
+import com.group5.ecommerce.repository.UserRepository;
 import com.group5.ecommerce.repository.product.ProductRepository;
 import com.group5.ecommerce.response.SendListResponse;
 import com.group5.ecommerce.response.review.ReviewMapper;
@@ -20,6 +23,7 @@ public class ReviewServiceImpl implements ReviewService {
 
     private final ReviewRepository reviewRepository;
     private final ProductRepository productRepository;
+    private final UserRepository userRepository;
 
     @Override
     public SendListResponse<ReviewResponse> getAllProductReviews(Long productId) {
@@ -43,6 +47,32 @@ public class ReviewServiceImpl implements ReviewService {
                 );
 
         return ReviewMapper.INSTANCE.toResponse(review);
+    }
+
+    @Override
+    public ReviewResponse createReview(Long userId, Long productId, CreateReviewDto reviewData) {
+        var user = this.userRepository
+                .findById(userId)
+                .orElseThrow(
+                        () -> new NotFoundException("La cuenta no existe")
+                );
+
+        var product = this.productRepository
+                .findById(productId)
+                .orElseThrow(
+                        () -> new NotFoundException("El producto no existe")
+                );
+
+        var review = Review.builder()
+                .score(reviewData.getScore())
+                .comment(reviewData.getComment())
+                .user(user)
+                .product(product)
+                .build();
+
+        var savedReview = this.reviewRepository.save(review);
+
+        return ReviewMapper.INSTANCE.toResponse(savedReview);
     }
 
 }
