@@ -2,6 +2,7 @@ package com.group5.ecommerce.controller;
 
 import com.group5.ecommerce.dto.category.CreateCategoryDto;
 import com.group5.ecommerce.dto.category.UpdateCategoryDto;
+import com.group5.ecommerce.response.MessageResponse;
 import com.group5.ecommerce.response.SendListResponse;
 import com.group5.ecommerce.response.category.CategoryResponse;
 import com.group5.ecommerce.response.category.DetailCategoryResponse;
@@ -31,6 +32,11 @@ public class CategoryController {
             @Valid @RequestBody CreateCategoryDto categoryData
     ) {
         return new ResponseEntity<>(this.categoryService.createCategory(categoryData), HttpStatus.OK);
+    }
+
+    @DeleteMapping("/{categoryId}")
+    public ResponseEntity<MessageResponse> deleteCategory(@PathVariable Long categoryId) {
+        return new ResponseEntity<>(this.categoryService.deleteCategory(categoryId), HttpStatus.OK);
     }
 
     @PutMapping(path = "{categoryId}")
