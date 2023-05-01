@@ -1,9 +1,11 @@
 package com.group5.ecommerce.service.review;
 
 import com.group5.ecommerce.dto.review.CreateReviewDto;
+import com.group5.ecommerce.dto.review.UpdateReviewDto;
 import com.group5.ecommerce.entity.Product;
 import com.group5.ecommerce.entity.Review;
 import com.group5.ecommerce.exception.NotFoundException;
+import com.group5.ecommerce.exception.UserIsNotOwnerException;
 import com.group5.ecommerce.repository.ReviewRepository;
 import com.group5.ecommerce.repository.UserRepository;
 import com.group5.ecommerce.repository.product.ProductRepository;
@@ -69,6 +71,25 @@ public class ReviewServiceImpl implements ReviewService {
                 .user(user)
                 .product(product)
                 .build();
+
+        var savedReview = this.reviewRepository.save(review);
+
+        return ReviewMapper.INSTANCE.toResponse(savedReview);
+    }
+
+    @Override
+    public ReviewResponse updateReview(Long userId, Long reviewId, UpdateReviewDto reviewData) throws UserIsNotOwnerException {
+        var review = this.reviewRepository
+                .findById(reviewId)
+                .orElseThrow(
+                        () -> new NotFoundException("La cuenta no existe")
+                );
+
+        if (!review.getUser().getId().equals(userId))
+            throw new UserIsNotOwnerException("Usted no es el dueño de esta review");
+
+        review.setScore(reviewData.getScore());
+        review.setComment(reviewData.getComment());
 
         var savedReview = this.reviewRepository.save(review);
 

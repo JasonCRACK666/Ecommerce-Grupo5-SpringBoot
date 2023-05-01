@@ -1,6 +1,8 @@
 package com.group5.ecommerce.controller;
 
 import com.group5.ecommerce.dto.review.CreateReviewDto;
+import com.group5.ecommerce.dto.review.UpdateReviewDto;
+import com.group5.ecommerce.exception.UserIsNotOwnerException;
 import com.group5.ecommerce.response.SendListResponse;
 import com.group5.ecommerce.response.review.ReviewResponse;
 import com.group5.ecommerce.service.review.ReviewService;
@@ -41,6 +43,18 @@ public class ReviewController {
     ) {
         return new ResponseEntity<>(
                 this.reviewService.createReview(userId, productId, reviewData),
+                HttpStatus.OK
+        );
+    }
+
+    @PutMapping(path = "{reviewId}")
+    public ResponseEntity<ReviewResponse> updateReview(
+            @PathVariable("reviewId") Long reviewId,
+            @Valid @RequestBody UpdateReviewDto reviewData,
+            @RequestAttribute("user") Long userId
+    ) throws UserIsNotOwnerException {
+        return new ResponseEntity<>(
+                this.reviewService.updateReview(userId, reviewId, reviewData),
                 HttpStatus.OK
         );
     }
