@@ -7,10 +7,7 @@ import com.group5.ecommerce.service.review.ReviewService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping(path = "api/reviews")
@@ -27,7 +24,7 @@ public class ReviewController {
     }
 
     @GetMapping(path = "{reviewId}")
-    public ResponseEntity<ReviewResponse> detailProduct(
+    public ResponseEntity<ReviewResponse> detailReview(
             @PathVariable("reviewId") Long reviewId
     ) {
        return new ResponseEntity<>(this.reviewService.detailReview(reviewId), HttpStatus.OK);
