@@ -1,5 +1,6 @@
 package com.group5.ecommerce.config;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -10,14 +11,23 @@ import java.util.Properties;
 @Configuration
 public class JavaMailSenderConfig {
 
+    @Value("${mail.username}")
+    private String mailtrapUsername;
+
+    @Value("${mail.password}")
+    private String mailtrapPassword;
+
+    @Value("${mail.port}")
+    private int mailtrapPort;
+
     @Bean
     public JavaMailSender javaMailSender() {
         JavaMailSenderImpl mailSender = new JavaMailSenderImpl();
         mailSender.setHost("sandbox.smtp.mailtrap.io");
-        mailSender.setPort(2525);
+        mailSender.setPort(mailtrapPort);
 
-        mailSender.setUsername("4f161313d97712");
-        mailSender.setPassword("d55c6617bb8b6e");
+        mailSender.setUsername(mailtrapUsername);
+        mailSender.setPassword(mailtrapPassword);
 
         Properties props = mailSender.getJavaMailProperties();
 
