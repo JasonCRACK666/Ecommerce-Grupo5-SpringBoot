@@ -1,9 +1,16 @@
 package com.group5.ecommerce.utils.mails;
 
+import com.group5.ecommerce.exception.MailNotSentException;
+
+import jakarta.mail.MessagingException;
+import jakarta.mail.internet.MimeMessage;
+
 import lombok.RequiredArgsConstructor;
-import org.springframework.mail.SimpleMailMessage;
+
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Component;
+
+import java.util.UUID;
 
 @Component
 @RequiredArgsConstructor
@@ -13,30 +20,31 @@ public class SendEmailsUtils extends EmailBodies {
 
     public void sendAccountActivationEmail(
             String to,
-            String activationCode
-    ) {
+            UUID activationCode
+    ) throws MailNotSentException {
         var subject = "Activación de cuenta - TechHouse";
 
-        SimpleMailMessage message = this.sendEmail(
-                to,
-                subject
-        );
+        try {
+            MimeMessage message = this.sendEmail(to, subject);
 
-        var url = "https://techhouse.com/auth/activate/" + activationCode;
+            var url = "https://techhouse.com/auth/activate/" + activationCode;
 
-        message.setText(this.activationAccountBody(url));
+            message.setContent(this.activationAccountBody(url), "text/html; charset=utf-8");
 
-        javaMailSender.send(message);
+            javaMailSender.send(message);
+        } catch (MessagingException e) {
+            throw new MailNotSentException("El correo de activación no ha podido ser enviado");
+        }
     }
 
-    private SimpleMailMessage sendEmail(
+    private MimeMessage sendEmail(
             String to,
             String subject
-    ) {
-        SimpleMailMessage message = new SimpleMailMessage();
+    ) throws MessagingException {
+        MimeMessage message = javaMailSender.createMimeMessage();
 
         message.setFrom("ecommerce_api_official@gmail.com");
-        message.setTo(to);
+        message.setRecipients(MimeMessage.RecipientType.TO, to);
         message.setSubject(subject);
 
         return message;

@@ -3,6 +3,7 @@ package com.group5.ecommerce.controller;
 import com.group5.ecommerce.dto.auth.ActiveUserDto;
 import com.group5.ecommerce.dto.auth.LoginDto;
 import com.group5.ecommerce.dto.auth.RegisterUserDto;
+import com.group5.ecommerce.exception.MailNotSentException;
 import com.group5.ecommerce.exception.UserAccountIsActivatedException;
 import com.group5.ecommerce.exception.UserAccountNotActivatedException;
 import com.group5.ecommerce.response.MessageResponse;
@@ -21,6 +22,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping(path = "api/auth")
 public class AuthController {
+
     @Autowired
     private AuthService authService;
 
@@ -41,7 +43,7 @@ public class AuthController {
     @PostMapping(path = "register")
     public ResponseEntity<RegisterUserResponse> register(
             @RequestBody RegisterUserDto userData
-    ) {
+    ) throws MailNotSentException {
         return new ResponseEntity<>(this.authService.registerUser(userData), HttpStatus.OK);
     }
 

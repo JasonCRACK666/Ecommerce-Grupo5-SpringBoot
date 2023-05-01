@@ -7,6 +7,7 @@ import com.group5.ecommerce.entity.Cart;
 import com.group5.ecommerce.entity.User;
 import com.group5.ecommerce.entity.WishList;
 import com.group5.ecommerce.entity.enums.Role;
+import com.group5.ecommerce.exception.MailNotSentException;
 import com.group5.ecommerce.exception.NotFoundException;
 import com.group5.ecommerce.exception.UserAccountIsActivatedException;
 import com.group5.ecommerce.exception.UserAccountNotActivatedException;
@@ -21,6 +22,7 @@ import com.group5.ecommerce.response.auth.LoginResponse;
 import com.group5.ecommerce.response.auth.RegisterUserResponse;
 import com.group5.ecommerce.utils.JwtUtils;
 
+import com.group5.ecommerce.utils.mails.SendEmailsUtils;
 import lombok.RequiredArgsConstructor;
 
 import org.springframework.security.authentication.AuthenticationManager;
@@ -36,6 +38,7 @@ public class AuthServiceImpl implements AuthService {
 
     private final PasswordEncoder passwordEncoder;
     private final JwtUtils jwtUtils;
+    private final SendEmailsUtils sendEmailsUtils;
     private final AuthenticationManager authenticationManager;
 
     private final UserRepository userRepository;
@@ -78,7 +81,7 @@ public class AuthServiceImpl implements AuthService {
     }
 
     @Override
-    public RegisterUserResponse registerUser(RegisterUserDto userData) {
+    public RegisterUserResponse registerUser(RegisterUserDto userData) throws MailNotSentException {
         var account = new Account();
         this.accountRepository.save(account);
 
@@ -104,7 +107,12 @@ public class AuthServiceImpl implements AuthService {
 
         var savedUser = this.userRepository.save(user);
 
-        return new RegisterUserResponse("Se ha enviado a " + savedUser.getActivateCode() + " un link de activación");
+        this.sendEmailsUtils.sendAccountActivationEmail(
+                savedUser.getEmail(),
+                savedUser.getActivateCode()
+        );
+
+        return new RegisterUserResponse("Se le a enviado a su correo el link de activación");
     }
 
     @Override
