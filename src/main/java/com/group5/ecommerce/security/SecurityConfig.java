@@ -78,6 +78,11 @@ public class SecurityConfig {
                         )
                             .authenticated()
                         .requestMatchers(
+                                HttpMethod.PUT,
+                                "/api/reviews/{reviewId}"
+                        )
+                            .authenticated()
+                        .requestMatchers(
                                 HttpMethod.PATCH,
                                 ""
                         )
