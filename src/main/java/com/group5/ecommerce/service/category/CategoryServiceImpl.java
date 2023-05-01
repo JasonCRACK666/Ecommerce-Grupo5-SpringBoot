@@ -5,6 +5,7 @@ import com.group5.ecommerce.dto.category.UpdateCategoryDto;
 import com.group5.ecommerce.entity.Category;
 import com.group5.ecommerce.exception.NotFoundException;
 import com.group5.ecommerce.repository.CategoryRepository;
+import com.group5.ecommerce.response.MessageResponse;
 import com.group5.ecommerce.response.SendListResponse;
 import com.group5.ecommerce.response.category.CategoryMapper;
 import com.group5.ecommerce.response.category.CategoryResponse;
@@ -38,6 +39,18 @@ public class CategoryServiceImpl implements CategoryService {
         var savedCategory = this.categoryRepository.save(category);
 
         return CategoryMapper.INSTANCE.toResponse(savedCategory);
+    }
+
+    @Override
+    public MessageResponse deleteCategory(Long categoryId) {
+        Category category = categoryRepository
+                .findById(categoryId)
+                .orElseThrow(
+                        () -> new NotFoundException("La categoria no existe")
+                );
+            categoryRepository.delete(category);
+
+            return  new MessageResponse("La categoria a sido elimado");
     }
 
     @Override
