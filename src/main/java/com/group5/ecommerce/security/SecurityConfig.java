@@ -43,7 +43,7 @@ public class SecurityConfig {
                             .hasAuthority(Role.ADMIN.name())
                         .requestMatchers(
                                 HttpMethod.PUT,
-                                ""
+                                "/api/colors/{colorId}"
                         )
                         .hasAuthority(Role.ADMIN.name())
                         .requestMatchers(
