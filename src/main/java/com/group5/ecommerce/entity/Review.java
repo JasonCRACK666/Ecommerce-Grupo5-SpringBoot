@@ -33,7 +33,7 @@ public class Review {
     @CreationTimestamp
     private LocalDateTime createdAt;
 
-    @Column(nullable = false, columnDefinition = "INT default 0")
+    @Column(nullable = false, columnDefinition = "integer default 1")
     private Integer score;
 
     @Column(columnDefinition = "TEXT")
