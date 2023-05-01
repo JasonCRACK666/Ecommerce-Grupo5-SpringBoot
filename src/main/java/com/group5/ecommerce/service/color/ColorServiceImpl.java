@@ -59,7 +59,7 @@ public class ColorServiceImpl implements ColorService {
         Color color = this.colorRepository
                 .findById(id)
                 .orElseThrow(
-                        () -> new NotFoundReqException("El color no existe")
+                        () -> new NotFoundException("El color no existe")
                 );
 
         color.setName(colorData.getName());

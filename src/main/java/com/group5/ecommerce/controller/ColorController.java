@@ -7,7 +7,7 @@ import com.group5.ecommerce.response.SendListResponse;
 import com.group5.ecommerce.response.color.ColorResponse;
 import com.group5.ecommerce.response.color.DetailColorResponse;
 
-import com.group5.ecommerce.service.colors.ColorService;
+import com.group5.ecommerce.service.color.ColorService;
 import jakarta.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
