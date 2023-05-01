@@ -27,9 +27,7 @@ public class SendEmailsUtils extends EmailBodies {
         try {
             MimeMessage message = this.sendEmail(to, subject);
 
-            var url = "https://techhouse.com/auth/activate/" + activationCode;
-
-            message.setContent(this.activationAccountBody(url), "text/html; charset=utf-8");
+            message.setContent(this.activationAccountBody(activationCode), "text/html; charset=utf-8");
 
             javaMailSender.send(message);
         } catch (MessagingException e) {

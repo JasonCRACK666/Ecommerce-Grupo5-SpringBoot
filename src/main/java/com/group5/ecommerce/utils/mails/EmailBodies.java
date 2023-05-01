@@ -1,7 +1,9 @@
 package com.group5.ecommerce.utils.mails;
 
+import java.util.UUID;
+
 public class EmailBodies {
-    protected String activationAccountBody(String activateAccountUrl) {
+    protected String activationAccountBody(UUID activationCode) {
         return "<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Transitional//EN\" \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd\">\n" +
                 "<html xmlns=\"http://www.w3.org/1999/xhtml\" xmlns:o=\"urn:schemas-microsoft-com:office:office\" style=\"width:100%;-webkit-text-size-adjust:100%;-ms-text-size-adjust:100%;padding:0;Margin:0\">\n" +
                 " <head>\n" +
@@ -100,7 +102,7 @@ public class EmailBodies {
                 "                  <td align=\"left\" style=\"padding:0;Margin:0;width:278px\">\n" +
                 "                   <table width=\"100%\" cellspacing=\"0\" cellpadding=\"0\" role=\"presentation\" style=\"mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px\">\n" +
                 "                     <tr style=\"border-collapse:collapse\">\n" +
-                "                      <td align=\"right\" class=\"es-infoblock es-m-txt-c\" style=\"padding:0;Margin:0;line-height:14px;font-size:12px;color:#CCCCCC\"><p style=\"Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-family:lato, 'helvetica neue', helvetica, arial, sans-serif;line-height:14px;color:#CCCCCC;font-size:12px\"><a href=\"" + activateAccountUrl + "\" class=\"view\" target=\"_blank\" style=\"-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;text-decoration:underline;color:#CCCCCC;font-size:12px;font-family:arial, 'helvetica neue', helvetica, sans-serif\">View in browser</a></p></td>\n" +
+                "                      <td align=\"right\" class=\"es-infoblock es-m-txt-c\" style=\"padding:0;Margin:0;line-height:14px;font-size:12px;color:#CCCCCC\"><p style=\"Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-family:lato, 'helvetica neue', helvetica, arial, sans-serif;line-height:14px;color:#CCCCCC;font-size:12px\"><a href=\"https://techhouse.com\" class=\"view\" target=\"_blank\" style=\"-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;text-decoration:underline;color:#CCCCCC;font-size:12px;font-family:arial, 'helvetica neue', helvetica, sans-serif\">View in browser</a></p></td>\n" +
                 "                     </tr>\n" +
                 "                   </table></td>\n" +
                 "                 </tr>\n" +
@@ -171,7 +173,7 @@ public class EmailBodies {
                 "                  <td valign=\"top\" align=\"center\" style=\"padding:0;Margin:0;width:540px\">\n" +
                 "                   <table width=\"100%\" cellspacing=\"0\" cellpadding=\"0\" role=\"presentation\" style=\"mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px\">\n" +
                 "                     <tr style=\"border-collapse:collapse\">\n" +
-                "                      <td align=\"center\" style=\"Margin:0;padding-left:10px;padding-right:10px;padding-top:15px;padding-bottom:20px\"><span class=\"es-button-border\" style=\"border-style:solid;border-color:#66bb7f;background:#6d6bc0;border-width:1px;display:inline-block;border-radius:10px;width:auto;mso-border-alt:10px\"><a href=\"https://viewstripo.email/\" class=\"es-button es-button-1682899238391\" target=\"_blank\" style=\"mso-style-priority:100 !important;text-decoration:none;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;color:#FFFFFF;font-size:20px;display:inline-block;background:#6d6bc0;border-radius:10px;font-family:helvetica, 'helvetica neue', arial, verdana, sans-serif;font-weight:normal;font-style:normal;line-height:24px;width:auto;text-align:center;padding:15px 25px;border-color:#6d6bc0\">Activar cuenta</a></span></td>\n" +
+                "                      <td align=\"center\" style=\"Margin:0;padding-left:10px;padding-right:10px;padding-top:15px;padding-bottom:20px\"><span class=\"es-button-border\" style=\"border-style:solid;border-color:#66bb7f;background:#6d6bc0;border-width:1px;display:inline-block;border-radius:10px;width:auto;mso-border-alt:10px\"><a href=\"https://techhouse.com/auth/activation/" + activationCode + "/\" class=\"es-button es-button-1682899238391\" target=\"_blank\" style=\"mso-style-priority:100 !important;text-decoration:none;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;color:#FFFFFF;font-size:20px;display:inline-block;background:#6d6bc0;border-radius:10px;font-family:helvetica, 'helvetica neue', arial, verdana, sans-serif;font-weight:normal;font-style:normal;line-height:24px;width:auto;text-align:center;padding:15px 25px;border-color:#6d6bc0\">Activar cuenta</a></span></td>\n" +
                 "                     </tr>\n" +
                 "                   </table></td>\n" +
                 "                 </tr>\n" +
