@@ -16,5 +16,5 @@ public interface AuthService {
     AccountResponse getMe(Long userId);
     LoginResponse login(LoginDto loginData) throws UserAccountNotActivatedException;
     RegisterUserResponse registerUser(RegisterUserDto userData) throws MailNotSentException;
-    MessageResponse activateUser(UUID activateCode) throws UserAccountIsActivatedException;
+    MessageResponse activateUser(UUID activateCode) throws UserAccountIsActivatedException, MailNotSentException;
 }

@@ -50,7 +50,7 @@ public class AuthController {
     @PostMapping(path = "activate")
     public ResponseEntity<MessageResponse> activate(
             @Valid @RequestBody ActiveUserDto activeUser
-    ) throws UserAccountIsActivatedException {
+    ) throws UserAccountIsActivatedException, MailNotSentException {
         return new ResponseEntity<>(
                 this.authService.activateUser(activeUser.getActivationCode()),
                 HttpStatus.OK

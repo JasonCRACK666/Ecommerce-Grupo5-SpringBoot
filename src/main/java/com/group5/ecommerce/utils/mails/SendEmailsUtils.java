@@ -35,6 +35,20 @@ public class SendEmailsUtils extends EmailBodies {
         }
     }
 
+    public void sendAccountActivationSuccessful(String to) throws MailNotSentException {
+        var subject = "Activación de cuenta exitosa - TechHouse";
+
+        try {
+            MimeMessage message = this.sendEmail(to, subject);
+
+            message.setContent(this.accountActivationSuccessfulBody(), "text/html; charset=utf-8");
+
+            javaMailSender.send(message);
+        } catch (MessagingException e) {
+            throw new MailNotSentException("El correo de activación exitosa no ha podido ser enviado");
+        }
+    }
+
     private MimeMessage sendEmail(
             String to,
             String subject

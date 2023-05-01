@@ -21,8 +21,8 @@ import com.group5.ecommerce.response.account.AccountResponse;
 import com.group5.ecommerce.response.auth.LoginResponse;
 import com.group5.ecommerce.response.auth.RegisterUserResponse;
 import com.group5.ecommerce.utils.JwtUtils;
-
 import com.group5.ecommerce.utils.mails.SendEmailsUtils;
+
 import lombok.RequiredArgsConstructor;
 
 import org.springframework.security.authentication.AuthenticationManager;
@@ -116,7 +116,8 @@ public class AuthServiceImpl implements AuthService {
     }
 
     @Override
-    public MessageResponse activateUser(UUID activateCode) throws UserAccountIsActivatedException {
+    public MessageResponse activateUser(UUID activateCode)
+            throws UserAccountIsActivatedException, MailNotSentException {
         var user = this.userRepository
                 .findByActivateCode(activateCode)
                 .orElseThrow(
@@ -128,7 +129,9 @@ public class AuthServiceImpl implements AuthService {
 
         user.setIsActive(true);
 
-        this.userRepository.save(user);
+        var savedUser = this.userRepository.save(user);
+
+        this.sendEmailsUtils.sendAccountActivationSuccessful(savedUser.getEmail());
 
         return new MessageResponse("Su cuenta ha sido activada, bienvenido " + user.getUserName());
     }
