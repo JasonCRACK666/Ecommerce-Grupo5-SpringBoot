@@ -2,23 +2,23 @@ package com.group5.ecommerce.service.auth;
 
 import com.group5.ecommerce.dto.auth.LoginDto;
 import com.group5.ecommerce.dto.auth.RegisterUserDto;
-
 import com.group5.ecommerce.entity.Account;
 import com.group5.ecommerce.entity.Cart;
 import com.group5.ecommerce.entity.User;
 import com.group5.ecommerce.entity.WishList;
 import com.group5.ecommerce.entity.enums.Role;
-
-import com.group5.ecommerce.exception.notFound.NotFoundReqException;
+import com.group5.ecommerce.exception.NotFoundException;
+import com.group5.ecommerce.exception.UserAccountIsActivatedException;
+import com.group5.ecommerce.exception.UserAccountNotActivatedException;
 import com.group5.ecommerce.repository.AccountRepository;
 import com.group5.ecommerce.repository.CartRepository;
 import com.group5.ecommerce.repository.UserRepository;
 import com.group5.ecommerce.repository.WishListRepository;
-
 import com.group5.ecommerce.response.MessageResponse;
+import com.group5.ecommerce.response.account.AccountMapper;
+import com.group5.ecommerce.response.account.AccountResponse;
 import com.group5.ecommerce.response.auth.LoginResponse;
 import com.group5.ecommerce.response.auth.RegisterUserResponse;
-
 import com.group5.ecommerce.utils.JwtUtils;
 
 import lombok.RequiredArgsConstructor;
@@ -28,12 +28,12 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.Optional;
 import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
-public class AuthServiceImp implements AuthService {
+public class AuthServiceImpl implements AuthService {
+
     private final PasswordEncoder passwordEncoder;
     private final JwtUtils jwtUtils;
     private final AuthenticationManager authenticationManager;
@@ -44,16 +44,33 @@ public class AuthServiceImp implements AuthService {
     private final WishListRepository wishListRepository;
 
     @Override
-    public LoginResponse login(LoginDto loginData) {
+    public AccountResponse getMe(Long userId) {
+        var user = this.userRepository
+                .findById(userId)
+                .orElseThrow(
+                        () -> new NotFoundException("La cuenta no existe")
+                );
+
+        return AccountMapper.INSTANCE.toResponse(user.getAccount(), user);
+    }
+
+    @Override
+    public LoginResponse login(LoginDto loginData) throws UserAccountNotActivatedException {
+        var user = this.userRepository
+                .findByEmail(loginData.getEmail())
+                .orElseThrow(
+                        () -> new NotFoundException("El correo electrónico es incorrecto")
+                );
+
+        if (!user.getIsActive())
+            throw new UserAccountNotActivatedException();
+
         authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
                         loginData.getEmail(),
                         loginData.getPassword()
                 )
         );
-
-        var user = this.userRepository.findByEmail(loginData.getEmail())
-                .orElseThrow();
 
         var jwtToken = this.jwtUtils.generateToken(user);
 
@@ -91,16 +108,21 @@ public class AuthServiceImp implements AuthService {
     }
 
     @Override
-    public MessageResponse activateUser(UUID activateCode) {
-        Optional<User> user = this.userRepository.findByActivateCode(activateCode);
+    public MessageResponse activateUser(UUID activateCode) throws UserAccountIsActivatedException {
+        var user = this.userRepository
+                .findByActivateCode(activateCode)
+                .orElseThrow(
+                        () -> new NotFoundException("La cuenta no existe")
+                );
 
-        if (user.isEmpty()) throw new NotFoundReqException("El usuario no existe");
+        if (user.getIsActive())
+            throw new UserAccountIsActivatedException();
 
-        user.get().setIsActive(true);
+        user.setIsActive(true);
 
-        this.userRepository.save(user.get());
+        this.userRepository.save(user);
 
-        return new MessageResponse("Cuenta activada");
+        return new MessageResponse("Su cuenta ha sido activada, bienvenido " + user.getUserName());
     }
 
 }

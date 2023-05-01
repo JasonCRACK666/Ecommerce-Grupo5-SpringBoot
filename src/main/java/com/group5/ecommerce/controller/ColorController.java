@@ -6,8 +6,8 @@ import com.group5.ecommerce.response.MessageResponse;
 import com.group5.ecommerce.response.SendListResponse;
 import com.group5.ecommerce.response.color.ColorResponse;
 import com.group5.ecommerce.response.color.DetailColorResponse;
-import com.group5.ecommerce.service.colors.ColorServiceImpl;
 
+import com.group5.ecommerce.service.colors.ColorService;
 import jakarta.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.*;
 public class ColorController {
 
     @Autowired
-    private ColorServiceImpl colorService;
+    private ColorService colorService;
 
     @GetMapping
     public ResponseEntity<SendListResponse<ColorResponse>> getAllColor() {
@@ -28,7 +28,7 @@ public class ColorController {
     }
 
     @PostMapping
-    public ResponseEntity<ColorResponse> create(@Valid @RequestBody CreateColorDto colorData) {
+    public ResponseEntity<ColorResponse> create(@RequestBody CreateColorDto colorData) {
         return ResponseEntity.status(HttpStatus.CREATED).body(colorService.save(colorData));
     }
 
