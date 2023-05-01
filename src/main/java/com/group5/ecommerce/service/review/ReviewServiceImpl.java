@@ -79,14 +79,20 @@ public class ReviewServiceImpl implements ReviewService {
 
     @Override
     public ReviewResponse updateReview(Long userId, Long reviewId, UpdateReviewDto reviewData) throws UserIsNotOwnerException {
-        var review = this.reviewRepository
-                .findById(reviewId)
+        var user = this.userRepository
+                .findById(userId)
                 .orElseThrow(
                         () -> new NotFoundException("La cuenta no existe")
                 );
 
-        if (!review.getUser().getId().equals(userId))
-            throw new UserIsNotOwnerException("Usted no es el dueño de esta review");
+        var review = this.reviewRepository
+                .findById(reviewId)
+                .orElseThrow(
+                        () -> new NotFoundException("La reseña no existe")
+                );
+
+        if (!review.getUser().getId().equals(user.getId()))
+            throw new UserIsNotOwnerException("Usted no es el dueño de esta reseña");
 
         review.setScore(reviewData.getScore());
         review.setComment(reviewData.getComment());
