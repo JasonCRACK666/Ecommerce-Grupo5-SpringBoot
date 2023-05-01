@@ -11,16 +11,17 @@ import com.group5.ecommerce.response.color.ColorMapper;
 import com.group5.ecommerce.response.color.ColorResponse;
 import com.group5.ecommerce.response.color.DetailColorResponse;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
+
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class ColorServiceImpl implements ColorService {
 
-    @Autowired
-    private ColorRepository colorRepository;
+    private final ColorRepository colorRepository;
 
     @Override
     public ColorResponse save(CreateColorDto colorData) {
@@ -44,7 +45,7 @@ public class ColorServiceImpl implements ColorService {
 
         colorRepository.delete(color);
 
-        return new MessageResponse("El color ha sido elimiando");
+        return new MessageResponse("El color ha sido eliminado");
     }
 
     @Override
