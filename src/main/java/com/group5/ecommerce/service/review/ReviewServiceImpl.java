@@ -9,6 +9,7 @@ import com.group5.ecommerce.exception.UserIsNotOwnerException;
 import com.group5.ecommerce.repository.ReviewRepository;
 import com.group5.ecommerce.repository.UserRepository;
 import com.group5.ecommerce.repository.product.ProductRepository;
+import com.group5.ecommerce.response.MessageResponse;
 import com.group5.ecommerce.response.SendListResponse;
 import com.group5.ecommerce.response.review.ReviewMapper;
 import com.group5.ecommerce.response.review.ReviewResponse;
@@ -75,6 +76,28 @@ public class ReviewServiceImpl implements ReviewService {
         var savedReview = this.reviewRepository.save(review);
 
         return ReviewMapper.INSTANCE.toResponse(savedReview);
+    }
+
+    @Override
+    public MessageResponse deleteReview(Long userId, Long reviewId) throws UserIsNotOwnerException {
+        var user = this.userRepository
+                .findById(userId)
+                .orElseThrow(
+                        () -> new NotFoundException("La cuenta no existe")
+                );
+
+        var review = this.reviewRepository
+                .findById(reviewId)
+                .orElseThrow(
+                        () -> new NotFoundException("La reseña no existe")
+                );
+
+        if (!review.getUser().getId().equals(user.getId()))
+            throw new UserIsNotOwnerException("Usted no es el dueño de esta reseña");
+
+        this.reviewRepository.delete(review);
+
+        return new MessageResponse("La reseña ha sido eliminada");
     }
 
     @Override

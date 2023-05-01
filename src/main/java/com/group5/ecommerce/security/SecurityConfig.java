@@ -74,7 +74,7 @@ public class SecurityConfig {
                             .authenticated()
                         .requestMatchers(
                                 HttpMethod.DELETE,
-                                ""
+                                "/api/reviews/{reviewId}"
                         )
                             .authenticated()
                         .requestMatchers(
