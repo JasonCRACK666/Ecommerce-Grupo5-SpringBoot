@@ -4,7 +4,7 @@ import com.group5.ecommerce.dto.color.CreateColorDto;
 import com.group5.ecommerce.entity.Color;
 import com.group5.ecommerce.response.MessageResponse;
 import com.group5.ecommerce.response.SendListResponse;
-import com.group5.ecommerce.service.color.ColorServiceImpl;
+import com.group5.ecommerce.service.color.ColorService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.*;
 public class ColorController {
 
     @Autowired
-    private ColorServiceImpl colorService;
+    private ColorService colorService;
 
     @GetMapping
     public ResponseEntity<SendListResponse<Color>> getAllColor() {

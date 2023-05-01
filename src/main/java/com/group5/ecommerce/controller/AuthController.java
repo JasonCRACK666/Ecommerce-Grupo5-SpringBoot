@@ -5,9 +5,10 @@ import com.group5.ecommerce.dto.auth.RegisterUserDto;
 import com.group5.ecommerce.response.MessageResponse;
 import com.group5.ecommerce.response.auth.LoginResponse;
 import com.group5.ecommerce.response.auth.RegisterUserResponse;
-import com.group5.ecommerce.service.auth.AuthServiceImp;
+import com.group5.ecommerce.service.auth.AuthService;
 
 import jakarta.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,7 +20,7 @@ import java.util.UUID;
 @RequestMapping(path = "api/auth")
 public class AuthController {
     @Autowired
-    private AuthServiceImp authService;
+    private AuthService authService;
 
     @PostMapping(path = "login")
     public ResponseEntity<LoginResponse> login(

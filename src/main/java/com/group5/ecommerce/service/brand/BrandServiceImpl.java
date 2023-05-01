@@ -20,7 +20,7 @@ import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
-public class BrandServiceImp implements BrandService {
+public class BrandServiceImpl implements BrandService {
 
     private final CloudinaryUtils cloudinaryUtils;
 

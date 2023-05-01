@@ -2,23 +2,19 @@ package com.group5.ecommerce.service.auth;
 
 import com.group5.ecommerce.dto.auth.LoginDto;
 import com.group5.ecommerce.dto.auth.RegisterUserDto;
-
 import com.group5.ecommerce.entity.Account;
 import com.group5.ecommerce.entity.Cart;
 import com.group5.ecommerce.entity.User;
 import com.group5.ecommerce.entity.WishList;
 import com.group5.ecommerce.entity.enums.Role;
-
 import com.group5.ecommerce.exception.NotFoundException;
 import com.group5.ecommerce.repository.AccountRepository;
 import com.group5.ecommerce.repository.CartRepository;
 import com.group5.ecommerce.repository.UserRepository;
 import com.group5.ecommerce.repository.WishListRepository;
-
 import com.group5.ecommerce.response.MessageResponse;
 import com.group5.ecommerce.response.auth.LoginResponse;
 import com.group5.ecommerce.response.auth.RegisterUserResponse;
-
 import com.group5.ecommerce.utils.JwtUtils;
 
 import lombok.RequiredArgsConstructor;
@@ -33,7 +29,7 @@ import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
-public class AuthServiceImp implements AuthService {
+public class AuthServiceImpl implements AuthService {
     private final PasswordEncoder passwordEncoder;
     private final JwtUtils jwtUtils;
     private final AuthenticationManager authenticationManager;
