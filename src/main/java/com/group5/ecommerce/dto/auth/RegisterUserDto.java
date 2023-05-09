@@ -32,5 +32,10 @@ public class RegisterUserDto {
     private Integer dni;
 
     @NotBlank(message = "Sus apellidos son requeridos")
+    @Pattern(
+            regexp="^(?=.*[!@#$%^&*()\\-_=+\\\\|\\[{\\]};:'\",.<>\\/?])(?=.*[A-Z])(?=.*[a-z])(?=.*\\d)[^\\s]{8,}$",
+            message="La contraseña require mínimo: 1 minúscula, 1 mayúscula, 1 carácter especial y 1 número"
+    )
+    @Size(max = 15, message = "Máximo 15 caracteres")
     private String password;
 }
