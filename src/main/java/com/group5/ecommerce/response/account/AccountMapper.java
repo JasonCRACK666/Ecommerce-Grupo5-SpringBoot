@@ -18,6 +18,11 @@ public interface AccountMapper {
 
     @Mapping(source = "account.id", target = "id")
     @Mapping(source = "user.userName", target = "username")
+    @Mapping(source = "user.role", target = "role")
+    AccountMeResponse toMeResponse(Account account, User user);
+
+    @Mapping(source = "account.id", target = "id")
+    @Mapping(source = "user.userName", target = "username")
     DetailAccountResponse toDetailResponse(Account account, User user);
 
 }
