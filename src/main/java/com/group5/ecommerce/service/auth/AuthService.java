@@ -6,14 +6,14 @@ import com.group5.ecommerce.exception.MailNotSentException;
 import com.group5.ecommerce.exception.UserAccountIsActivatedException;
 import com.group5.ecommerce.exception.UserAccountNotActivatedException;
 import com.group5.ecommerce.response.MessageResponse;
-import com.group5.ecommerce.response.account.AccountResponse;
+import com.group5.ecommerce.response.account.AccountMeResponse;
 import com.group5.ecommerce.response.auth.LoginResponse;
 import com.group5.ecommerce.response.auth.RegisterUserResponse;
 
 import java.util.UUID;
 
 public interface AuthService {
-    AccountResponse getMe(Long userId);
+    AccountMeResponse getMe(Long userId);
     LoginResponse login(LoginDto loginData) throws UserAccountNotActivatedException;
     RegisterUserResponse registerUser(RegisterUserDto userData) throws MailNotSentException;
     MessageResponse activateUser(UUID activateCode) throws UserAccountIsActivatedException, MailNotSentException;
