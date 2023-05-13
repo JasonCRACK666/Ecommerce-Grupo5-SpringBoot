@@ -21,7 +21,7 @@ public class ProductResponse {
     private BigDecimal originalPrice;
     private Integer discountRate;
     private Integer quantity;
-    private LocalDateTime publicationDate;
+    private String publicationDate;
     private CategoryResponse category;
     private BrandResponse brand;
     private ImageResponse image;

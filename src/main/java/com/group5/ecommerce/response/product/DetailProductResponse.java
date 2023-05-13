@@ -25,7 +25,7 @@ public class DetailProductResponse {
     private Integer pointValue;
     private Integer quantity;
     private Integer sold;
-    private LocalDateTime publicationDate;
+    private String publicationDate;
     private CategoryResponse category;
     private BrandResponse brand;
     private List<ImageResponse> images;
