@@ -35,22 +35,9 @@ public class EcommerceApplication {
 			AccountRepository accountRepository,
 			CartRepository cartRepository,
 			WishListRepository wishListRepository,
-			PasswordEncoder passwordEncoder,
-			ColorRepository colorRepository,
-			CategoryRepository categoryRepository
+			PasswordEncoder passwordEncoder
 	) {
 		return args -> {
-			var category = Category.builder()
-					.name("TestCategory")
-					.build();
-			categoryRepository.save(category);
-
-			var color = Color.builder()
-					.name("TestColor")
-					.hex("#ffffff")
-					.build();
-			colorRepository.save(color);
-
 			var account = new Account();
 			accountRepository.save(account);
 
