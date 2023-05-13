@@ -16,6 +16,7 @@ public interface ReviewMapper {
     @Mapping(source = "review.id", target = "id")
     @Mapping(source = "review.user.userName", target = "username")
     @Mapping(source = "review.user.account.avatar", target = "avatar")
+    @Mapping(expression = "java(review.getCreatedAt().toString())", target = "createdAt")
     ReviewResponse toResponse(Review review);
 
     List<ReviewResponse> toListResponse(List<Review> reviews);

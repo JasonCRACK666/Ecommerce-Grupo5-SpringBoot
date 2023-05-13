@@ -7,6 +7,7 @@ import com.group5.ecommerce.response.category.CategoryResponse;
 import com.group5.ecommerce.response.color.ColorResponse;
 import com.group5.ecommerce.response.image.ImageResponse;
 import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;
 
 import java.util.List;
@@ -17,6 +18,7 @@ public interface ProductMapper {
 
     ProductMapper INSTANCE = Mappers.getMapper(ProductMapper.class);
 
+    @Mapping(expression = "java(product.getPublicationDate().toString())", target = "publicationDate")
     DetailProductResponse toResponse(Product product);
 
     default List<ProductResponse> toListResponse(List<Product> products) {
@@ -27,7 +29,7 @@ public interface ProductMapper {
                         product.getOriginalPrice(),
                         product.getDiscountRate(),
                         product.getQuantity(),
-                        product.getPublicationDate(),
+                        product.getPublicationDate().toString(),
                         new CategoryResponse(
                                 product.getCategory().getId(),
                                 product.getCategory().getName()

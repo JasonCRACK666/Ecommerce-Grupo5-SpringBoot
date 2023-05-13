@@ -15,5 +15,5 @@ public class ReviewResponse {
     private String avatar;
     private Integer score;
     private String comment;
-    private LocalDateTime createdAt;
+    private String createdAt;
 }
