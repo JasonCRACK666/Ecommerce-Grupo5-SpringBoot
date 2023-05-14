@@ -90,7 +90,7 @@ public class Product {
     private List<Image> images;
 
     @JdbcTypeCode(SqlTypes.ARRAY)
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany(cascade = CascadeType.MERGE)
     @JoinTable(
             name = "product_color",
             joinColumns = @JoinColumn(name = "color_id", referencedColumnName = "id"),
