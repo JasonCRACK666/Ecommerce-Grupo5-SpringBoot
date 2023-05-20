@@ -97,6 +97,19 @@ public class BrandServiceImpl implements BrandService {
     }
 
     @Override
+    public MessageResponse deleteBrand(Long brandId) {
+        Brand brand = this.brandRepository
+                .findById(brandId)
+                .orElseThrow(
+                        () -> new NotFoundException("La marca no existe")
+                );
+
+        this.brandRepository.delete(brand);
+
+        return new MessageResponse("La marca ha sido eliminada");
+    }
+
+    @Override
     public DetailBrandResponse updateBrand(Long brandId, UpdateBrandDto brandData) {
         var brand = this.brandRepository
                 .findById(brandId)

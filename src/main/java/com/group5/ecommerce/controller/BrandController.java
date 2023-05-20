@@ -43,6 +43,13 @@ public class BrandController {
         return new ResponseEntity<>(this.brandService.followBrand(userId, brandData.getBrandId()), HttpStatus.OK);
     }
 
+    @DeleteMapping(path = "{brandId}")
+    public ResponseEntity<MessageResponse> deleteBrand(
+            @PathVariable("brandId") Long brandId
+    ) {
+        return new ResponseEntity<>(this.brandService.deleteBrand(brandId), HttpStatus.OK);
+    }
+
     @PatchMapping(path = "{brandId}")
     public ResponseEntity<DetailBrandResponse> updateBrand(
             @PathVariable("brandId") Long brandId,

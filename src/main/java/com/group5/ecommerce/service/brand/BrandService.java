@@ -11,5 +11,6 @@ public interface BrandService {
     SendListResponse<BrandResponse> getAllBrands();
     DetailBrandResponse saveBrand(CreateBrandDto brandData);
     MessageResponse followBrand(Long userId ,Long brandId);
+    MessageResponse deleteBrand(Long brandId);
     DetailBrandResponse updateBrand(Long brandId, UpdateBrandDto brandData);
 }
