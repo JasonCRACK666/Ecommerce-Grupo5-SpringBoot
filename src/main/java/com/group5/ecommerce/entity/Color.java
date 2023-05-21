@@ -34,7 +34,7 @@ public class Color {
     @Column(nullable = false, length = 7)
     private String hex;
 
-    @ManyToMany(mappedBy = "colors")
+    @ManyToMany(mappedBy = "colors", cascade = CascadeType.REMOVE)
     private List<Product> products;
 
 }
