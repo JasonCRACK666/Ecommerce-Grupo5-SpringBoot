@@ -38,6 +38,17 @@ public class BrandServiceImpl implements BrandService {
     }
 
     @Override
+    public DetailBrandResponse getDetailBrandById(Long brandId) {
+        Brand brand = this.brandRepository
+                .findById(brandId)
+                .orElseThrow(
+                        () -> new NotFoundException("La marca no existe")
+                );
+
+        return BrandMapper.INSTANCE.toDetailResponse(brand);
+    }
+
+    @Override
     public DetailBrandResponse saveBrand(CreateBrandDto brandData) {
         String logoUrl, bannerUrl;
 

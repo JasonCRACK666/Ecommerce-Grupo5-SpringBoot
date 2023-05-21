@@ -28,6 +28,13 @@ public class BrandController {
         return new ResponseEntity<>(this.brandService.getAllBrands(), HttpStatus.OK);
     }
 
+    @GetMapping(path = "{brandId}")
+    public ResponseEntity<DetailBrandResponse> brand(
+            @PathVariable("brandId") Long brandId
+    ) {
+        return new ResponseEntity<>(this.brandService.getDetailBrandById(brandId), HttpStatus.OK);
+    }
+
     @PostMapping
     public ResponseEntity<DetailBrandResponse> createBrand(
             @Valid CreateBrandDto brandData
