@@ -31,6 +31,17 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
+    public CategoryResponse getCategoryById(Long categoryId) {
+        Category category = this.categoryRepository
+                .findById(categoryId)
+                .orElseThrow(
+                        () -> new NotFoundException("La categoria no existe")
+                );
+
+        return CategoryMapper.INSTANCE.toResponse(category);
+    }
+
+    @Override
     public CategoryResponse createCategory(CreateCategoryDto categoryData) {
         var category = Category.builder()
                 .name(categoryData.getName())

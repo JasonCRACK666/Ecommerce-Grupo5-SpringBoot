@@ -9,7 +9,8 @@ import com.group5.ecommerce.response.category.DetailCategoryResponse;
 
 public interface CategoryService {
     SendListResponse<CategoryResponse> getAllCategory();
-    CategoryResponse createCategory(CreateCategoryDto categoryData);
+        CategoryResponse getCategoryById(Long categoryId);
+        CategoryResponse createCategory(CreateCategoryDto categoryData);
     MessageResponse deleteCategory(Long id);
     DetailCategoryResponse updateCategory(Long id, UpdateCategoryDto categoryData);
 }

@@ -27,6 +27,13 @@ public class CategoryController {
         return new ResponseEntity<>(this.categoryService.getAllCategory(), HttpStatus.OK);
     }
 
+    @GetMapping(path = "{categoryId}")
+    public ResponseEntity<CategoryResponse> categoryDetail(
+            @PathVariable("categoryId") Long categoryId
+    ) {
+        return new ResponseEntity<>(this.categoryService.getCategoryById(categoryId), HttpStatus.OK);
+    }
+
     @PostMapping
     public ResponseEntity<CategoryResponse> createCategory(
             @Valid @RequestBody CreateCategoryDto categoryData
