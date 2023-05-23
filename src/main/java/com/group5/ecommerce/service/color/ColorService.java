@@ -8,8 +8,9 @@ import com.group5.ecommerce.response.color.ColorResponse;
 import com.group5.ecommerce.response.color.DetailColorResponse;
 
 public interface ColorService {
+    SendListResponse<ColorResponse> getAllColor();
+    ColorResponse getColorDetail(Long colorId);
     ColorResponse save(CreateColorDto colorData);
     MessageResponse deleteColor(Long Id);
-    SendListResponse<ColorResponse> getAllColor();
     DetailColorResponse updateColor(Long id, UpdateColorDto colorData);
 }

@@ -27,6 +27,13 @@ public class ColorController {
         return new ResponseEntity<>(this.colorService.getAllColor(), HttpStatus.OK);
     }
 
+    @GetMapping(path = "{colorId}")
+    public ResponseEntity<ColorResponse> colorDetail(
+            @PathVariable("colorId") Long colorId
+    ) {
+        return new ResponseEntity<>(this.colorService.getColorDetail(colorId), HttpStatus.OK);
+    }
+
     @PostMapping
     public ResponseEntity<ColorResponse> create(@Valid @RequestBody CreateColorDto colorData) {
         return new ResponseEntity<>(this.colorService.save(colorData), HttpStatus.OK);
