@@ -56,6 +56,17 @@ public class ColorServiceImpl implements ColorService {
     }
 
     @Override
+    public ColorResponse getColorDetail(Long colorId) {
+        Color color = this.colorRepository
+                .findById(colorId)
+                .orElseThrow(
+                        () -> new NotFoundException("El color no existe")
+                );
+
+        return ColorMapper.INSTANCE.toResponse(color);
+    }
+
+    @Override
     public DetailColorResponse updateColor(Long id, UpdateColorDto colorData) {
         Color color = this.colorRepository
                 .findById(id)
