@@ -10,7 +10,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
 import java.util.List;
 
 @Data
@@ -28,6 +27,9 @@ public class DetailProductResponse {
     private String publicationDate;
     private CategoryResponse category;
     private BrandResponse brand;
+    private BigDecimal finalPrice;
+    private Integer averageScore;
+    private Integer countReviews;
     private List<ImageResponse> images;
     private List<ColorResponse> colors;
 }
