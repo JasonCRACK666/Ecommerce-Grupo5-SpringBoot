@@ -15,10 +15,7 @@ import lombok.NoArgsConstructor;
 public class UpdateReviewDto {
     @NotNull(message = "La puntuación es requerida")
     @Positive(message = "La puntuación debe ser mayor a 0")
-    @Max(
-            value = 5,
-            message = "La puntuación maxima es 5"
-    )
+    @Max(value = 5, message = "La puntuación maxima es 5")
     private Integer score;
 
     @Size(

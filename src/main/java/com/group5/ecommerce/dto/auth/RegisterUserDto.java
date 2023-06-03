@@ -22,16 +22,16 @@ public class RegisterUserDto {
     @Size(min = 3, max = 25, message = "Mínimo 3 caracteres y máximo 25 caracteres")
     private String lastName;
 
-    @NotBlank(message = "Sus apellidos son requeridos")
+    @NotBlank(message = "El correo electrónico es requerido")
     @Email(message = "El correo electrónico es invalido")
     private String email;
 
     @NotNull(message = "El DNI es requerido")
-    @Digits(fraction = 0, integer = 8, message = "El número de DNI son de 8 dígitos")
-    @Min(value = 8, message = "El número de DNI son de 8 dígitos")
+    @Digits(fraction = 0, integer = 8, message = "El número de DNI es de 8 dígitos")
+    @Min(value = 8, message = "El número de DNI es de 8 dígitos")
     private Integer dni;
 
-    @NotBlank(message = "Sus apellidos son requeridos")
+    @NotBlank(message = "La contraseña es requerida")
     @Pattern(
             regexp="^(?=.*[!@#$%^&*()\\-_=+\\\\|\\[{\\]};:'\",.<>\\/?])(?=.*[A-Z])(?=.*[a-z])(?=.*\\d)[^\\s]{8,}$",
             message="La contraseña require mínimo: 1 minúscula, 1 mayúscula, 1 carácter especial y 1 número"

@@ -10,6 +10,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class CreateCategoryDto {
-    @NotBlank(message = "El nombre de la categoria es requerida")
+    @NotBlank(message = "El nombre de la categoría es requerida")
     private String name;
 }

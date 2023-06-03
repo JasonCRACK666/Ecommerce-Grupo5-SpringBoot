@@ -11,8 +11,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class LoginDto {
-
-    @Email(message = "El correó es invalido")
+    @Email(message = "El correó electrónico es invalido")
     @NotBlank(message = "El correo electrónico es requerido")
     private String email;
 

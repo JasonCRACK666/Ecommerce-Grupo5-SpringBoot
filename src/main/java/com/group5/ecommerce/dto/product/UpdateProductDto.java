@@ -18,14 +18,14 @@ public class UpdateProductDto {
     @Size(min = 6, max = 30, message = "Mínimo 6 caracteres y máximo 30 caracteres para el titulo")
     private String title;
 
-    @Size(min = 15, message = "Mínimo 6 caracteres caracteres para la descripción")
+    @Size(min = 15, message = "Mínimo 15 caracteres caracteres para la descripción")
     private String description;
 
     @Digits(fraction = 2, integer = 5)
-    @Positive(message = "El precio debe ser mayor a 0")
+    @Positive(message = "El precio original debe ser mayor a 0")
     private BigDecimal originalPrice;
 
-    @Max(value = 50)
+    @Max(value = 50, message = "Máximo 50% de descuento")
     @Positive(message = "El porcentaje de descuento debe ser mayor a 0")
     private Integer discountRate;
 
