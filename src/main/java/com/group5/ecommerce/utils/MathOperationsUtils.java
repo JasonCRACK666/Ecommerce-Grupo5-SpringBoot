@@ -5,6 +5,7 @@ import com.group5.ecommerce.entity.Review;
 import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
+import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.List;
 
@@ -39,11 +40,10 @@ public class MathOperationsUtils {
 
         BigDecimal finalPrice = originalPrice.subtract(discount);
 
-        NumberFormat numberFormat = NumberFormat.getInstance();
-        numberFormat.setMaximumFractionDigits(2);
+        NumberFormat formatter = new DecimalFormat("#####");
 
         return BigDecimal.valueOf(
-                Double.parseDouble(numberFormat.format(finalPrice))
+                Integer.parseInt(formatter.format(finalPrice))
         );
     }
 }
