@@ -31,7 +31,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests((authz) -> authz
                         .requestMatchers(
                                 HttpMethod.GET,
-                                ""
+                                "/api/users"
                         )
                             .hasAuthority(Role.ADMIN.name())
                         .requestMatchers(
