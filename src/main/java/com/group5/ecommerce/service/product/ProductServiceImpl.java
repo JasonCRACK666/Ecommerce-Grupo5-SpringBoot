@@ -9,8 +9,8 @@ import com.group5.ecommerce.exception.NotFoundException;
 import com.group5.ecommerce.repository.*;
 import com.group5.ecommerce.repository.product.ProductRepository;
 import com.group5.ecommerce.response.MessageResponse;
+import com.group5.ecommerce.response.PaginatedResponse;
 import com.group5.ecommerce.response.product.DetailProductResponse;
-import com.group5.ecommerce.response.product.PaginatedProductsResponse;
 import com.group5.ecommerce.response.product.ProductMapper;
 import com.group5.ecommerce.response.product.ProductResponse;
 import com.group5.ecommerce.utils.CloudinaryUtils;
@@ -42,7 +42,7 @@ public class ProductServiceImpl implements ProductService {
     private final BrandRepository brandRepository;
 
     @Override
-    public PaginatedProductsResponse getAllProducts(int page, int size) {
+    public PaginatedResponse<ProductResponse> getAllProducts(int page, int size) {
         Pageable pageable = PageRequest.of(page, size);
 
         Page<Product> paginatedProducts = this.productRepository.findAll(pageable);
@@ -51,7 +51,7 @@ public class ProductServiceImpl implements ProductService {
 
         List<ProductResponse> mappedProducts = ProductMapper.INSTANCE.toListResponse(products);
 
-        return new PaginatedProductsResponse(
+        return new PaginatedResponse<>(
                 mappedProducts,
                 paginatedProducts.getNumber(),
                 paginatedProducts.getSize(),
@@ -62,7 +62,7 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public PaginatedProductsResponse searchProducts(
+    public PaginatedResponse<ProductResponse> searchProducts(
             String query,
             SortBy sortBy,
             SearchOrder order,
@@ -115,7 +115,7 @@ public class ProductServiceImpl implements ProductService {
 
         List<ProductResponse> mappedProducts = ProductMapper.INSTANCE.toListResponse(paginatedProducts.getContent());
 
-        return new PaginatedProductsResponse(
+        return new PaginatedResponse<>(
                 mappedProducts,
                 paginatedProducts.getNumber(),
                 paginatedProducts.getSize(),

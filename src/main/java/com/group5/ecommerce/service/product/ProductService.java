@@ -5,15 +5,16 @@ import com.group5.ecommerce.dto.product.UpdateProductDto;
 import com.group5.ecommerce.entity.enums.SearchOrder;
 import com.group5.ecommerce.entity.enums.SortBy;
 import com.group5.ecommerce.response.MessageResponse;
+import com.group5.ecommerce.response.PaginatedResponse;
 import com.group5.ecommerce.response.product.DetailProductResponse;
-import com.group5.ecommerce.response.product.PaginatedProductsResponse;
+import com.group5.ecommerce.response.product.ProductResponse;
 
 import java.math.BigDecimal;
 import java.util.List;
 
 public interface ProductService {
-    PaginatedProductsResponse getAllProducts(int page, int size);
-    PaginatedProductsResponse searchProducts(
+    PaginatedResponse<ProductResponse> getAllProducts(int page, int size);
+    PaginatedResponse<ProductResponse> searchProducts(
             String query,
             SortBy sortBy,
             SearchOrder order,

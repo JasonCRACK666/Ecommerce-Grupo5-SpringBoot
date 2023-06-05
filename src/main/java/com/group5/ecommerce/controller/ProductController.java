@@ -5,8 +5,9 @@ import com.group5.ecommerce.dto.product.UpdateProductDto;
 import com.group5.ecommerce.entity.enums.SearchOrder;
 import com.group5.ecommerce.entity.enums.SortBy;
 import com.group5.ecommerce.response.MessageResponse;
+import com.group5.ecommerce.response.PaginatedResponse;
 import com.group5.ecommerce.response.product.DetailProductResponse;
-import com.group5.ecommerce.response.product.PaginatedProductsResponse;
+import com.group5.ecommerce.response.product.ProductResponse;
 import com.group5.ecommerce.service.product.ProductService;
 import com.group5.ecommerce.utils.ApiConstants;
 
@@ -27,7 +28,7 @@ public class ProductController {
     private ProductService productService;
 
     @GetMapping
-    public ResponseEntity<PaginatedProductsResponse> products(
+    public ResponseEntity<PaginatedResponse<ProductResponse>> products(
             @RequestParam(
                     value = "page",
                     defaultValue = ApiConstants.DEFAULT_PAGE_NUMBER,
@@ -45,7 +46,7 @@ public class ProductController {
     }
 
     @GetMapping("search")
-    public ResponseEntity<PaginatedProductsResponse> searchProducts(
+    public ResponseEntity<PaginatedResponse<ProductResponse>> searchProducts(
             @RequestParam(value = "q", required = false) String query,
             @RequestParam(value = "sortBy", required = false, defaultValue = "title") SortBy sortBy,
             @RequestParam(value = "order", required = false, defaultValue = "desc") SearchOrder order,
