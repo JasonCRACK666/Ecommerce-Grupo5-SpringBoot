@@ -54,7 +54,7 @@ public class ProductController {
             @RequestParam(value = "brand", required = false) String brandName,
             @RequestParam(value = "colors", required = false) List<String> colorNames,
             @RequestParam(value = "limitPrice", required = false) BigDecimal limitPrice,
-            @RequestParam(value = "inOffer", defaultValue = "false") boolean inOffer,
+            @RequestParam(value = "inOffer", required = false) boolean inOffer,
             @RequestParam(
                     value = "page",
                     required = false,
