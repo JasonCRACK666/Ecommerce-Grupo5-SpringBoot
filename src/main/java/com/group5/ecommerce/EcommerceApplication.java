@@ -31,6 +31,7 @@ public class EcommerceApplication {
 
 	@Bean
 	CommandLineRunner commandLineRunner(
+			CategoryRepository categoryRepository,
 			UserRepository userRepository,
 			AccountRepository accountRepository,
 			CartRepository cartRepository,
@@ -63,6 +64,22 @@ public class EcommerceApplication {
 					.build();
 
 			userRepository.save(user);
+
+			Category computadoras = Category.builder()
+					.name("computadoras")
+					.build();
+
+			Category laptops = Category.builder()
+					.name("laptops")
+					.build();
+
+			Category celulares = Category.builder()
+					.name("celulares")
+					.build();
+
+			categoryRepository.save(computadoras);
+			categoryRepository.save(laptops);
+			categoryRepository.save(celulares);
 		};
 	}
 
