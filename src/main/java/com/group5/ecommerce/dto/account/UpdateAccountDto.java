@@ -2,6 +2,7 @@ package com.group5.ecommerce.dto.account;
 
 import com.group5.ecommerce.entity.enums.Theme;
 
+import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.Size;
 
 import lombok.AllArgsConstructor;
@@ -35,11 +36,14 @@ public class UpdateAccountDto {
     )
     private String lastName;
 
+    @Email(message = "El correó electrónico es invalido")
+    private String email;
+
+    private Theme theme;
+
     private MultipartFile avatar;
 
     private MultipartFile banner;
-
-    private Theme theme;
 
     @Size(
             min = 8,

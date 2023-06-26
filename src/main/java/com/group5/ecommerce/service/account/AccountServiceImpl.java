@@ -55,6 +55,9 @@ public class AccountServiceImpl implements AccountService {
         if (accountData.getLastName() != null)
             user.setLastName(accountData.getLastName());
 
+        if (accountData.getEmail() != null)
+            user.setEmail(accountData.getEmail());
+
         if (accountData.getTheme() != null)
             account.setTheme(accountData.getTheme());
 
