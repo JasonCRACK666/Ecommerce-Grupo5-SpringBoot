@@ -6,7 +6,7 @@ import com.group5.ecommerce.exception.UserIsNotOwnerException;
 import com.group5.ecommerce.response.account.DetailAccountResponse;
 
 public interface AccountService {
-    DetailAccountResponse accountDetail(Long userId, Long accountId) throws UserIsNotOwnerException;
+    DetailAccountResponse accountDetail(Long userId);
     DetailAccountResponse updateAccount(Long userId, Long accountId, UpdateAccountDto accountData)
             throws UserIsNotOwnerException, ResourceNotUploadedException;
 }

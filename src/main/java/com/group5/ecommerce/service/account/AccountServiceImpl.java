@@ -26,17 +26,14 @@ public class AccountServiceImpl implements AccountService {
     private final UserRepository userRepository;
 
     @Override
-    public DetailAccountResponse accountDetail(Long userId, Long accountId) throws UserIsNotOwnerException {
-        var account = this.accountRepository
-                .findById(accountId)
+    public DetailAccountResponse accountDetail(Long userId) {
+        var user = this.userRepository
+                .findById(userId)
                 .orElseThrow(
                         () -> new NotFoundException("La cuenta no existe")
                 );
 
-        if (!account.getId().equals(userId))
-            throw new UserIsNotOwnerException("Usted no tiene permiso de hacer cambios en la cuenta");
-
-        return AccountMapper.INSTANCE.toDetailResponse(account, account.getUser());
+        return AccountMapper.INSTANCE.toDetailResponse(user.getAccount(), user);
     }
 
     @Override

@@ -20,13 +20,12 @@ public class AccountController {
     @Autowired
     private AccountService accountService;
 
-    @GetMapping(path = "{accountId}")
+    @GetMapping
     public ResponseEntity<DetailAccountResponse> accountDetail(
-            @RequestAttribute("user") Long userId,
-            @PathVariable("accountId") Long accountId
-    ) throws UserIsNotOwnerException {
+            @RequestAttribute("user") Long userId
+    ) {
         return new ResponseEntity<>(
-                this.accountService.accountDetail(userId, accountId),
+                this.accountService.accountDetail(userId),
                 HttpStatus.OK
         );
     }
