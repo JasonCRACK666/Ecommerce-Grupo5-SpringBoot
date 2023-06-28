@@ -16,23 +16,23 @@ import org.springframework.web.multipart.MultipartFile;
 @NoArgsConstructor
 public class UpdateAccountDto {
     @Size(
-            min = 2,
-            max = 20,
-            message = "Mínimo 2 caracteres y máximo 20 caracteres para el nombre de usuario"
+            min = 3,
+            max = 25,
+            message = "Mínimo 3 caracteres y máximo 25 caracteres para el nombre de usuario"
     )
     private String username;
 
     @Size(
-            min = 5,
-            max = 30,
-            message = "Mínimo 5 caracteres y máximo 30 caracteres para el nombre/s"
+            min = 3,
+            max = 25,
+            message = "Mínimo 3 caracteres y máximo 25 caracteres para el nombre/s"
     )
     private String firstName;
 
     @Size(
-            min = 5,
-            max = 30,
-            message = "Mínimo 5 caracteres y máximo 30 caracteres para el apellido/s"
+            min = 3,
+            max = 25,
+            message = "Mínimo 3 caracteres y máximo 25 caracteres para el apellido/s"
     )
     private String lastName;
 
@@ -47,7 +47,7 @@ public class UpdateAccountDto {
 
     @Size(
             min = 8,
-            message = "Mínimo 2 caracteres y máximo 20 caracteres para el nombre de usuario"
+            message = "Mínimo 8 caracteres para la información"
     )
     private String about;
 }
